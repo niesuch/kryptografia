@@ -35,9 +35,17 @@ public class Kryptografia extends JFrame {
         //textArea4.setPreferredSize(new Dimension(100, 300));
         container.add(textArea5);
         textArea5.setBounds(10, 170, 300, 150);
+
+        JButton szyfrujButton = new JButton("Szyfruj");   
+        container.add(szyfrujButton);
+        szyfrujButton.setBounds(180, 350, 150, 30);
+        
+        JButton deszufrujButton = new JButton("Deszyfruj");   
+        container.add(deszufrujButton);
+        deszufrujButton.setBounds(340, 350, 150, 30);
         
         setSize(665, 450);
-        setVisible(true);      
+        setVisible(true);
     }
 
     public static void main(String args[]) {
