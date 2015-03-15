@@ -80,37 +80,19 @@ public class Kryptografia extends JFrame {
 
         public void actionPerformed(ActionEvent e) {
             String tresc = textWejscie.getText();
-            int klucz = Integer.parseInt(kluczWejscie.getText());
-
+            String klucz = kluczWejscie.getText();
+            klucz = dodajAlfabet(klucz.toUpperCase());
             textWyjscie.setText("");
+            
+            char[] tab_tresc = tresc.toUpperCase().toCharArray();
+            char[] tab_klucz = klucz.toCharArray();
 
-            if ((klucz >= -25) && (klucz <= 25)) {
-                char[] znaki = tresc.toCharArray();
-
-                for (int i=0; i<tresc.length(); i++) {
-                    char znak = znaki[i];
-                    char szyfruj = szyfruj(znak, klucz);
-                    String wyjscie = Character.toString(szyfruj);
-
-                    textWyjscie.append(wyjscie);
-                }
+            for (int i = 0; i < tresc.length(); i++) {
+                int pozycja = sprawdzPozycjeAlfabet(tab_tresc[i]);
+                char szyfruj = tab_klucz[pozycja];
+                textWyjscie.append(Character.toString(szyfruj));
             }
         }
-    }
-
-    public static char szyfruj(char znak, int klucz) {
-        char[] alfabet = new char[26];
-        int i=0;
-
-        for (char ch='a'; ch<='z'; ++ch)
-            alfabet[ch-'a']=ch;
-      
-        while (i<26) {
-            if (znak == alfabet[i])
-                return alfabet[(i+klucz+26)%26];
-            i++;
-        }
-        return znak;
     }
 
     private class PrzyciskDeszyfruj implements ActionListener {
@@ -147,6 +129,32 @@ public class Kryptografia extends JFrame {
             i++;
         }
         return znak;
+    }
+    
+    public static String dodajAlfabet(String klucz) {
+        char[] znaki = klucz.toCharArray();
+
+        for (char ch = 'A'; ch <= 'Z'; ++ch) {
+            boolean poprawnosc = false;
+            for (int i = 0; i < znaki.length; i++)
+                if (znaki[i] == ch)
+                    poprawnosc = true;
+            if (!poprawnosc)
+                klucz += ch;
+        }
+        
+        return klucz;
+    }
+    
+    public int sprawdzPozycjeAlfabet(char znak) {
+        int pozycja=0;
+        for (char ch = 'A'; ch <= 'Z'; ++ch) {            
+            if(ch == znak)
+                break;        
+            pozycja++;
+        }
+
+        return pozycja;
     }
 
     public static void main(String[] args) {
