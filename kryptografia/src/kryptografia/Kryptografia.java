@@ -10,11 +10,12 @@ import javax.swing.border.*;
 public class Kryptografia extends JFrame {
 
     private static JTextField kluczWejscie;
-    private static JTextArea textWyjscie, textWejscie, textStat;
-    private JScrollPane scrollText, scrollText2, scrollTextStat;
-    private JButton szyfrujPrzycisk, deszyfrujPrzycisk;
+    private static JTextArea textWyjscie, textWejscie, textStat, textKrypto;
+    private JScrollPane scrollText, scrollText2, scrollTextStat, scrollTextKrypto;
+    private JButton szyfrujPrzycisk, deszyfrujPrzycisk, kryptoanalizaPrzycisk;
     private PrzyciskSzyfruj obslugaSzyfruj;
     private PrzyciskDeszyfruj obslugaDeszyfruj;
+    private PrzyciskKryptoanaliza obslugaKryptoanaliza;
 
     /**
      * Konstruktor głównej klasy, inicjalizowanie wyglądu programu
@@ -32,6 +33,12 @@ public class Kryptografia extends JFrame {
         scrollTextStat.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         textStat.setLineWrap(true);
         textStat.setWrapStyleWord(true);
+        
+        textKrypto = new JTextArea("", 800, 50);
+        scrollTextKrypto = new JScrollPane(textKrypto);
+        scrollTextKrypto.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        textKrypto.setLineWrap(true);
+        textKrypto.setWrapStyleWord(true);
 
         kluczWejscie = new JTextField(3);
 
@@ -53,6 +60,10 @@ public class Kryptografia extends JFrame {
         deszyfrujPrzycisk = new JButton("Deszyfruj");
         obslugaDeszyfruj = new PrzyciskDeszyfruj();
         deszyfrujPrzycisk.addActionListener(obslugaDeszyfruj);
+        
+        kryptoanalizaPrzycisk = new JButton("Start Kryptoanaliza");
+        obslugaKryptoanaliza = new PrzyciskKryptoanaliza();
+        kryptoanalizaPrzycisk.addActionListener(obslugaKryptoanaliza);
 
         setTitle("Kryptografia");
 
@@ -61,26 +72,32 @@ public class Kryptografia extends JFrame {
 
         deszyfrujPrzycisk.setLocation(550, 452);
         szyfrujPrzycisk.setLocation(300, 452);
+        kryptoanalizaPrzycisk.setLocation(780, 200);
 
         scrollText2.setLocation(5, 52);
         kluczWejscie.setLocation(185, 233);
         scrollText.setLocation(5, 273);
         scrollTextStat.setLocation(410, 52);
+        scrollTextKrypto.setLocation(595, 52);
 
         deszyfrujPrzycisk.setSize(200, 40);
         szyfrujPrzycisk.setSize(200, 40);
+        kryptoanalizaPrzycisk.setSize(150, 40);
 
         scrollText2.setSize(400, 180);
         kluczWejscie.setSize(60, 40);
         scrollText.setSize(400, 180);
         scrollTextStat.setSize(180, 400);
+        scrollTextKrypto.setSize(180, 400);
 
         okno.add(deszyfrujPrzycisk);
         okno.add(szyfrujPrzycisk);
+        okno.add(kryptoanalizaPrzycisk);
         okno.add(scrollText2);
         okno.add(kluczWejscie);
         okno.add(scrollText);
         okno.add(scrollTextStat);
+        okno.add(scrollTextKrypto);
 
         setSize(1035, 530);
         setVisible(true);
@@ -146,6 +163,15 @@ public class Kryptografia extends JFrame {
             
             String charakterystyka = wyznaczCharakterystyke(textWyjscie.getText());
             textStat.setText(charakterystyka);
+        }
+    }
+    
+    /**
+     * Obsługa przycisku "Start Kryptoanaliza"
+     */
+    private class PrzyciskKryptoanaliza implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            
         }
     }
     
