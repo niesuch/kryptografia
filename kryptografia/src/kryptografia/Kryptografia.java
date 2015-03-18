@@ -103,7 +103,13 @@ public class Kryptografia extends JFrame {
 
             for (int i = 0; i < tresc.length(); i++) {
                 int pozycja = sprawdzPozycjeAlfabet(tab_tresc[i]);
-                char szyfruj = tab_klucz[pozycja];
+                char szyfruj;
+                
+                if(pozycja == -1)
+                    szyfruj = tab_tresc[i];
+                else
+                    szyfruj = tab_klucz[pozycja];
+                
                 textWyjscie.append(Character.toString(szyfruj));
             }
             
@@ -128,7 +134,13 @@ public class Kryptografia extends JFrame {
 
             for (int i = 0; i < tresc.length(); i++) {
                 int pozycja = sprawdzPozycjeKlucz(tab_tresc[i], klucz);
-                char deszyfruj = tab_alfabet[pozycja];
+                char deszyfruj;
+                
+                if(pozycja == -1)
+                    deszyfruj = tab_tresc[i];
+                else
+                    deszyfruj = tab_alfabet[pozycja];
+                
                 textWyjscie.append(Character.toString(deszyfruj));
             }
             
@@ -164,13 +176,19 @@ public class Kryptografia extends JFrame {
      */
     public int sprawdzPozycjeAlfabet(char znak) {
         int pozycja=0;
+        boolean czyZnaleziono = false;
         for (char ch = 'A'; ch <= 'Z'; ++ch) {            
-            if(ch == znak)
-                break;        
+            if(ch == znak) {
+                czyZnaleziono = true;
+                break;
+            }
             pozycja++;
         }
 
-        return pozycja;
+        if(czyZnaleziono)
+            return pozycja;
+        else
+            return -1;
     }
     
     /**
@@ -182,13 +200,19 @@ public class Kryptografia extends JFrame {
     public int sprawdzPozycjeKlucz(char znak, String klucz) {
         char[] tab_klucz = klucz.toCharArray();
         int pozycja=0;
+        boolean czyZnaleziono = false;
         for (int i=0; i<klucz.length(); i++) {
-            if(znak == tab_klucz[i])
+            if(znak == tab_klucz[i]) {
+                czyZnaleziono = true;
                 break;
+            }
             pozycja++;
         }
         
-        return pozycja;
+        if(czyZnaleziono)
+            return pozycja;
+        else
+            return -1;
     }
     
     /**
