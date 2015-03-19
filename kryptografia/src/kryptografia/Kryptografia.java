@@ -16,6 +16,7 @@ public class Kryptografia extends JFrame {
     private PrzyciskSzyfruj obslugaSzyfruj;
     private PrzyciskDeszyfruj obslugaDeszyfruj;
     private PrzyciskKryptoanaliza obslugaKryptoanaliza;
+    private String kluczKryptoanaliza;
 
     /**
      * Konstruktor głównej klasy, inicjalizowanie wyglądu programu
@@ -171,7 +172,14 @@ public class Kryptografia extends JFrame {
      */
     private class PrzyciskKryptoanaliza implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            
+            String text = textKrypto.getText();
+            if(text.isEmpty()) {
+                String szablon = wygenerujSzablonKryptoanalizy();
+                textKrypto.setText(szablon);
+            }
+            else {
+                
+            }
         }
     }
     
@@ -293,6 +301,26 @@ public class Kryptografia extends JFrame {
                 wystapienia++;
         }
         return wystapienia;
+    }
+    
+    public String wygenerujSzablonKryptoanalizy() {
+        String szablon="";
+        String alfabet = pobierzAlfabet();
+        char[] tab_alfabet = alfabet.toCharArray();
+        
+        if(kluczKryptoanaliza == null)
+            kluczKryptoanaliza = pobierzAlfabet();
+        
+        char[] tab_kluczKryptoanaliza = kluczKryptoanaliza.toCharArray();
+        
+        for(int i=0; i<kluczKryptoanaliza.length(); i++) {
+            szablon += tab_alfabet[i];
+            szablon += "\t => ";
+            szablon += tab_kluczKryptoanaliza[i];
+            szablon += "\n";
+        }        
+        
+        return szablon;
     }
 
     /**
