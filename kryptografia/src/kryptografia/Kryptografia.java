@@ -178,7 +178,7 @@ public class Kryptografia extends JFrame {
                 textKrypto.setText(szablon);
             }
             else {
-                
+                pobierzZmianyKryptoanalizy(textKrypto.getText());
             }
         }
     }
@@ -303,6 +303,10 @@ public class Kryptografia extends JFrame {
         return wystapienia;
     }
     
+    /**
+     * Generuje szablon kryptoanalizy
+     * @return 
+     */
     public String wygenerujSzablonKryptoanalizy() {
         String szablon="";
         String alfabet = pobierzAlfabet();
@@ -315,12 +319,24 @@ public class Kryptografia extends JFrame {
         
         for(int i=0; i<kluczKryptoanaliza.length(); i++) {
             szablon += tab_alfabet[i];
-            szablon += "\t => ";
+            szablon += " = ";
             szablon += tab_kluczKryptoanaliza[i];
             szablon += "\n";
         }        
         
         return szablon;
+    }
+    
+    /**
+     * Pobiera zmiany z szablonu kryptoanalizy do klucza
+     * @param szablon 
+     */
+    public void pobierzZmianyKryptoanalizy(String szablon) {
+        String[] tab_szablon = szablon.split(" = ");
+              
+        kluczKryptoanaliza = "";
+        for(int i=1; i<tab_szablon.length; i++)
+            kluczKryptoanaliza += tab_szablon[i].substring(0,1);
     }
 
     /**
