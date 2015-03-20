@@ -321,7 +321,7 @@ public class Kryptografia extends JFrame {
         
         for(int i=0; i<kluczKryptoanaliza.length(); i++) {
             szablon += tab_alfabet[i];
-            szablon += " = ";
+            szablon += " => ";
             szablon += tab_kluczKryptoanaliza[i];
             szablon += "\n";
         }        
@@ -334,7 +334,7 @@ public class Kryptografia extends JFrame {
      * @param szablon 
      */
     public void pobierzZmianyKryptoanalizy(String szablon) {
-        String[] tab_szablon = szablon.split(" = ");
+        String[] tab_szablon = szablon.split(" => ");
               
         kluczKryptoanaliza = "";
         for(int i=1; i<tab_szablon.length; i++)
