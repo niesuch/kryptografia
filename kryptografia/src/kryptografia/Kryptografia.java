@@ -179,6 +179,8 @@ public class Kryptografia extends JFrame {
             }
             else {
                 pobierzZmianyKryptoanalizy(textKrypto.getText());
+                String kryptoanaliza = kryptoanalizuj(textWejscie.getText());
+                textWyjscie.setText(kryptoanaliza);
             }
         }
     }
@@ -337,6 +339,30 @@ public class Kryptografia extends JFrame {
         kluczKryptoanaliza = "";
         for(int i=1; i<tab_szablon.length; i++)
             kluczKryptoanaliza += tab_szablon[i].substring(0,1);
+    }
+    
+    /**
+     * Kryptoanaliza metodą prób i błędów
+     * @param text
+     * @return 
+     */
+    public String kryptoanalizuj(String text) {
+        char[] tab_kluczKryptografia = kluczKryptoanaliza.toCharArray();
+        char[] tab_text = text.toCharArray();
+        String krypto = "";
+        
+        for (int i = 0; i < text.length(); i++) {
+            int pozycja = sprawdzPozycjeAlfabet(tab_text[i]);
+
+            if (pozycja == -1) {
+                krypto += tab_text[i];
+            } 
+            else {
+                krypto += tab_kluczKryptografia[pozycja];
+            }
+        }
+        
+        return krypto;
     }
 
     /**
