@@ -34,6 +34,7 @@ public class Kryptografia extends JFrame {
         scrollTextStat.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         textStat.setLineWrap(true);
         textStat.setWrapStyleWord(true);
+        textStat.setEditable(false);
         
         textKrypto = new JTextArea("", 800, 50);
         scrollTextKrypto = new JScrollPane(textKrypto);
@@ -44,12 +45,8 @@ public class Kryptografia extends JFrame {
         kluczWejscie = new JTextField(3);
 
         textWyjscie = new JTextArea("", 50, 895);
-        textWyjscie.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        textWyjscie = new JTextArea("", 50, 895);
-
         scrollText = new JScrollPane(textWyjscie);
-        scrollText.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        
+        scrollText.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);        
         textWyjscie.setLineWrap(true);
         textWyjscie.setWrapStyleWord(false);
         textWyjscie.setEditable(false);
@@ -67,26 +64,47 @@ public class Kryptografia extends JFrame {
         kryptoanalizaPrzycisk.addActionListener(obslugaKryptoanaliza);
 
         setTitle("Kryptografia");
+        
+        Font czcionka =  new Font("Courier New", Font.BOLD, 17);
+        JLabel tekst1 = new JLabel("Tekst do szyfrowania:", SwingConstants.LEFT);
+        tekst1.setSize(300, 20);
+        tekst1.setLocation(5, 30);
+        tekst1.setFont(czcionka);
+        
+        JLabel tekst2 = new JLabel("Klucz:", SwingConstants.LEFT);
+        tekst2.setSize(300, 20);
+        tekst2.setLocation(25, 245);
+        tekst2.setFont(czcionka);
+        
+        JLabel tekst3 = new JLabel("Charakterystyka", SwingConstants.LEFT);
+        tekst3.setSize(300, 20);
+        tekst3.setLocation(410, 30);
+        tekst3.setFont(czcionka);
+        
+        JLabel tekst4 = new JLabel("Kryptoanaliza", SwingConstants.LEFT);
+        tekst4.setSize(300, 20);
+        tekst4.setLocation(600, 30);
+        tekst4.setFont(czcionka);
 
         Container okno = getContentPane();
         okno.setLayout(null);
 
-        deszyfrujPrzycisk.setLocation(550, 452);
-        szyfrujPrzycisk.setLocation(300, 452);
-        kryptoanalizaPrzycisk.setLocation(780, 200);
+        deszyfrujPrzycisk.setLocation(120, 452);
+        szyfrujPrzycisk.setLocation(5, 452);
+        kryptoanalizaPrzycisk.setLocation(624, 452);
 
         scrollText2.setLocation(5, 52);
-        kluczWejscie.setLocation(185, 233);
+        kluczWejscie.setLocation(100, 233);
         scrollText.setLocation(5, 273);
         scrollTextStat.setLocation(410, 52);
         scrollTextKrypto.setLocation(595, 52);
 
-        deszyfrujPrzycisk.setSize(200, 40);
-        szyfrujPrzycisk.setSize(200, 40);
+        deszyfrujPrzycisk.setSize(100, 40);
+        szyfrujPrzycisk.setSize(100, 40);
         kryptoanalizaPrzycisk.setSize(150, 40);
 
         scrollText2.setSize(400, 180);
-        kluczWejscie.setSize(60, 40);
+        kluczWejscie.setSize(200, 40);
         scrollText.setSize(400, 180);
         scrollTextStat.setSize(180, 400);
         scrollTextKrypto.setSize(180, 400);
@@ -99,8 +117,12 @@ public class Kryptografia extends JFrame {
         okno.add(scrollText);
         okno.add(scrollTextStat);
         okno.add(scrollTextKrypto);
+        okno.add(tekst1);
+        okno.add(tekst2);
+        okno.add(tekst3);
+        okno.add(tekst4);
 
-        setSize(1035, 530);
+        setSize(795, 530);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
@@ -313,9 +335,8 @@ public class Kryptografia extends JFrame {
         String szablon="";
         String alfabet = pobierzAlfabet();
         char[] tab_alfabet = alfabet.toCharArray();
-        
-        if(kluczKryptoanaliza == null)
-            kluczKryptoanaliza = pobierzAlfabet();
+               
+        kluczKryptoanaliza = pobierzAlfabet();
         
         char[] tab_kluczKryptoanaliza = kluczKryptoanaliza.toCharArray();
         
@@ -353,13 +374,11 @@ public class Kryptografia extends JFrame {
         
         for (int i = 0; i < text.length(); i++) {
             int pozycja = sprawdzPozycjeAlfabet(tab_text[i]);
-
-            if (pozycja == -1) {
+            
+            if (pozycja == -1)
                 krypto += tab_text[i];
-            } 
-            else {
+            else 
                 krypto += tab_kluczKryptografia[pozycja];
-            }
         }
         
         return krypto;
