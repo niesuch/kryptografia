@@ -6,16 +6,24 @@ import java.awt.event.*;
 import java.util.*;
 import java.util.regex.*;
 import javax.swing.border.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 
 public class Kryptografia extends JFrame {
 
     private static JTextField kluczWejscie;
     private static JTextArea textWyjscie, textWejscie, textStat, textKrypto;
     private JScrollPane scrollText, scrollText2, scrollTextStat, scrollTextKrypto;
-    private JButton szyfrujPrzycisk, deszyfrujPrzycisk, kryptoanalizaPrzycisk;
+    private JButton szyfrujPrzycisk, deszyfrujPrzycisk, kryptoanalizaPrzycisk, archiwumKluczyPrzycisk, wczytajPrzycisk, autorzyPrzycisk;
     private PrzyciskSzyfruj obslugaSzyfruj;
     private PrzyciskDeszyfruj obslugaDeszyfruj;
     private PrzyciskKryptoanaliza obslugaKryptoanaliza;
+    private PrzyciskArchiwumKluczy obslugaArchiwumKluczy;
+    private PrzyciskWczytaj obslugaWczytaj;
+    private PrzyciskAutorzy obslugaAutorzy;
     private String kluczKryptoanaliza;
 
     /**
@@ -62,6 +70,18 @@ public class Kryptografia extends JFrame {
         kryptoanalizaPrzycisk = new JButton("Start Kryptoanaliza");
         obslugaKryptoanaliza = new PrzyciskKryptoanaliza();
         kryptoanalizaPrzycisk.addActionListener(obslugaKryptoanaliza);
+        
+        archiwumKluczyPrzycisk = new JButton("Archiwum kluczy");
+        obslugaArchiwumKluczy = new PrzyciskArchiwumKluczy();
+        archiwumKluczyPrzycisk.addActionListener(obslugaArchiwumKluczy);
+        
+        wczytajPrzycisk = new JButton("Wczytaj");
+        obslugaWczytaj = new PrzyciskWczytaj();
+        wczytajPrzycisk.addActionListener(obslugaWczytaj);
+        
+        autorzyPrzycisk = new JButton("Autorzy");
+        obslugaAutorzy = new PrzyciskAutorzy();
+        autorzyPrzycisk.addActionListener(obslugaAutorzy);
 
         setTitle("Kryptografia");
         
@@ -92,6 +112,9 @@ public class Kryptografia extends JFrame {
         deszyfrujPrzycisk.setLocation(120, 452);
         szyfrujPrzycisk.setLocation(5, 452);
         kryptoanalizaPrzycisk.setLocation(624, 452);
+        archiwumKluczyPrzycisk.setLocation(235, 452);
+        wczytajPrzycisk.setLocation(305, 233);
+        autorzyPrzycisk.setLocation(400,452);
 
         scrollText2.setLocation(5, 52);
         kluczWejscie.setLocation(100, 233);
@@ -102,6 +125,9 @@ public class Kryptografia extends JFrame {
         deszyfrujPrzycisk.setSize(100, 40);
         szyfrujPrzycisk.setSize(100, 40);
         kryptoanalizaPrzycisk.setSize(150, 40);
+        archiwumKluczyPrzycisk.setSize(150,40);
+        wczytajPrzycisk.setSize(82,40);
+        autorzyPrzycisk.setSize(100, 40);
 
         scrollText2.setSize(400, 180);
         kluczWejscie.setSize(200, 40);
@@ -112,6 +138,9 @@ public class Kryptografia extends JFrame {
         okno.add(deszyfrujPrzycisk);
         okno.add(szyfrujPrzycisk);
         okno.add(kryptoanalizaPrzycisk);
+        okno.add(archiwumKluczyPrzycisk);
+        okno.add(wczytajPrzycisk);
+        okno.add(autorzyPrzycisk);
         okno.add(scrollText2);
         okno.add(kluczWejscie);
         okno.add(scrollText);
@@ -126,12 +155,19 @@ public class Kryptografia extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
+    
+    /**
+     * Konstruktor parametryczny wpisujący wybrany klucz z archiwum w pole klucza
+     * @param wybor 
+     */
+    public Kryptografia(String wybor) {
+        kluczWejscie.setText(wybor);
+    }
 
     /**
      * Obsługa przycisku "Szyfruj"
      */
     private class PrzyciskSzyfruj implements ActionListener {
-
         public void actionPerformed(ActionEvent e) {
             String tresc = textWejscie.getText();
             String klucz = kluczWejscie.getText();
@@ -155,6 +191,8 @@ public class Kryptografia extends JFrame {
             
             String charakterystyka = wyznaczCharakterystyke(textWyjscie.getText());
             textStat.setText(charakterystyka);
+            if(sprawdzCzyKluczSiePowtarza(kluczWejscie.getText()) == 1)
+                zapiszKluczDoPliku();
         }
     }
 
@@ -204,6 +242,40 @@ public class Kryptografia extends JFrame {
                 String kryptoanaliza = kryptoanalizuj(textWejscie.getText());
                 textWyjscie.setText(kryptoanaliza);
             }
+        }
+    }
+    
+    /**
+     * Obsługa przycisku "Archiwum kluczy"
+     */
+    private class PrzyciskArchiwumKluczy implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String klucze = wczytajKluczeZpliku();
+            new Archiwum(klucze);
+        }
+    }
+    
+    /**
+     * Obsługa przycisku "Autorzy"
+     */
+    private class PrzyciskAutorzy implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(null, "Autorzy:"
+                                              + "\n- Kamil Niesłuchowski"
+                                              + "\n- Mateusz Goniprowski"
+                                              + "\n- Paweł Załuska");
+        }
+    }
+    
+    /**
+     * Obsługa przycisku "Wczytaj"
+     */
+    private class PrzyciskWczytaj implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String klucze = wczytajKluczeZpliku();
+            String[] tab_klucze = klucze.split(" ");
+            String ostatniKlucz = tab_klucze[tab_klucze.length - 1];
+            kluczWejscie.setText(ostatniKlucz);            
         }
     }
     
@@ -382,6 +454,58 @@ public class Kryptografia extends JFrame {
         }
         
         return krypto;
+    }
+    
+    /**
+     * Wczytuje klucze z pliku
+     * @return 
+     */
+    public String wczytajKluczeZpliku() {
+        File plik = new File("klucze.txt");
+        String str = "";
+
+        try {
+            Scanner in = new Scanner(plik);
+            while (in.hasNext()) {
+                str += in.next();
+                str += " ";
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return str;
+    }
+    
+    /**
+     * Zapisuje klucze do pliku
+     */
+    public void zapiszKluczDoPliku() {
+        try {
+            PrintWriter zapis = new PrintWriter(new FileOutputStream(
+                    new File("klucze.txt"),
+                    true ));
+            zapis.println(kluczWejscie.getText());
+            zapis.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } 
+    }
+    
+    /**
+     * Sprawdza przed zapisem do pliku czy dany klucz istnieje w archiwum
+     * @param klucz
+     * @return 
+     */
+    public int sprawdzCzyKluczSiePowtarza(String klucz) {
+        String archiwum = wczytajKluczeZpliku();
+        String[] tab_archiwum = archiwum.split(" ");
+        
+        for(int i=0; i<tab_archiwum.length; i++) {
+            if(tab_archiwum[i].equals(klucz))
+                return 0;
+        }
+        return 1;
     }
 
     /**
