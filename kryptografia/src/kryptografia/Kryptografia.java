@@ -30,12 +30,17 @@ public class Kryptografia extends JFrame {
      * Konstruktor głównej klasy, inicjalizowanie wyglądu programu
      */
     public Kryptografia() {
+        Container okno = getContentPane();
+        okno.setLayout(null); 
+        
         textWejscie = new JTextArea("", 50, 895);
-
         scrollText2 = new JScrollPane(textWejscie);
         scrollText2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         textWejscie.setLineWrap(true);
         textWejscie.setWrapStyleWord(true);
+        scrollText2.setLocation(5, 52);
+        scrollText2.setSize(400, 180);
+        okno.add(scrollText2);
         
         textStat = new JTextArea("", 800, 50);
         scrollTextStat = new JScrollPane(textStat);
@@ -43,14 +48,18 @@ public class Kryptografia extends JFrame {
         textStat.setLineWrap(true);
         textStat.setWrapStyleWord(true);
         textStat.setEditable(false);
+        scrollTextStat.setLocation(410, 52);
+        scrollTextStat.setSize(180, 400);
+        okno.add(scrollTextStat);
         
         textKrypto = new JTextArea("", 800, 50);
         scrollTextKrypto = new JScrollPane(textKrypto);
         scrollTextKrypto.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         textKrypto.setLineWrap(true);
         textKrypto.setWrapStyleWord(true);
-
-        kluczWejscie = new JTextField(3);
+        scrollTextKrypto.setLocation(595, 52);
+        scrollTextKrypto.setSize(180, 400);
+        okno.add(scrollTextKrypto);
 
         textWyjscie = new JTextArea("", 50, 895);
         scrollText = new JScrollPane(textWyjscie);
@@ -58,30 +67,56 @@ public class Kryptografia extends JFrame {
         textWyjscie.setLineWrap(true);
         textWyjscie.setWrapStyleWord(false);
         textWyjscie.setEditable(false);
+        scrollText.setLocation(5, 273);
+        scrollText.setSize(400, 180);
+        okno.add(scrollText);
+        
+        kluczWejscie = new JTextField(3);
+        kluczWejscie.setLocation(100, 233);
+        kluczWejscie.setSize(200, 40);
+        okno.add(kluczWejscie);
 
         szyfrujPrzycisk = new JButton("Szyfruj");
         obslugaSzyfruj = new PrzyciskSzyfruj();
         szyfrujPrzycisk.addActionListener(obslugaSzyfruj);
+        szyfrujPrzycisk.setLocation(5, 452);
+        szyfrujPrzycisk.setSize(100, 40);
+        okno.add(szyfrujPrzycisk);
         
         deszyfrujPrzycisk = new JButton("Deszyfruj");
         obslugaDeszyfruj = new PrzyciskDeszyfruj();
         deszyfrujPrzycisk.addActionListener(obslugaDeszyfruj);
+        deszyfrujPrzycisk.setLocation(120, 452);
+        deszyfrujPrzycisk.setSize(100, 40);
+        okno.add(deszyfrujPrzycisk);
         
         kryptoanalizaPrzycisk = new JButton("Start Kryptoanaliza");
         obslugaKryptoanaliza = new PrzyciskKryptoanaliza();
         kryptoanalizaPrzycisk.addActionListener(obslugaKryptoanaliza);
+        kryptoanalizaPrzycisk.setLocation(624, 452);
+        kryptoanalizaPrzycisk.setSize(150, 40);
+        okno.add(kryptoanalizaPrzycisk);
         
         archiwumKluczyPrzycisk = new JButton("Archiwum kluczy");
         obslugaArchiwumKluczy = new PrzyciskArchiwumKluczy();
         archiwumKluczyPrzycisk.addActionListener(obslugaArchiwumKluczy);
+        archiwumKluczyPrzycisk.setLocation(235, 452);
+        archiwumKluczyPrzycisk.setSize(150,40);
+        okno.add(archiwumKluczyPrzycisk);
         
         wczytajPrzycisk = new JButton("Wczytaj");
         obslugaWczytaj = new PrzyciskWczytaj();
         wczytajPrzycisk.addActionListener(obslugaWczytaj);
+        wczytajPrzycisk.setLocation(305, 233);
+        wczytajPrzycisk.setSize(82,40);     
+        okno.add(wczytajPrzycisk);
         
         autorzyPrzycisk = new JButton("Autorzy");
         obslugaAutorzy = new PrzyciskAutorzy();
         autorzyPrzycisk.addActionListener(obslugaAutorzy);
+        autorzyPrzycisk.setLocation(400,452);
+        autorzyPrzycisk.setSize(100, 40);
+        okno.add(autorzyPrzycisk);
 
         setTitle("Kryptografia");
         
@@ -90,65 +125,24 @@ public class Kryptografia extends JFrame {
         tekst1.setSize(300, 20);
         tekst1.setLocation(5, 30);
         tekst1.setFont(czcionka);
+        okno.add(tekst1);
         
         JLabel tekst2 = new JLabel("Klucz:", SwingConstants.LEFT);
         tekst2.setSize(300, 20);
         tekst2.setLocation(25, 245);
         tekst2.setFont(czcionka);
+        okno.add(tekst2);
         
         JLabel tekst3 = new JLabel("Charakterystyka", SwingConstants.LEFT);
         tekst3.setSize(300, 20);
         tekst3.setLocation(410, 30);
         tekst3.setFont(czcionka);
+        okno.add(tekst3);
         
         JLabel tekst4 = new JLabel("Kryptoanaliza", SwingConstants.LEFT);
         tekst4.setSize(300, 20);
         tekst4.setLocation(600, 30);
         tekst4.setFont(czcionka);
-
-        Container okno = getContentPane();
-        okno.setLayout(null);
-
-        deszyfrujPrzycisk.setLocation(120, 452);
-        szyfrujPrzycisk.setLocation(5, 452);
-        kryptoanalizaPrzycisk.setLocation(624, 452);
-        archiwumKluczyPrzycisk.setLocation(235, 452);
-        wczytajPrzycisk.setLocation(305, 233);
-        autorzyPrzycisk.setLocation(400,452);
-
-        scrollText2.setLocation(5, 52);
-        kluczWejscie.setLocation(100, 233);
-        scrollText.setLocation(5, 273);
-        scrollTextStat.setLocation(410, 52);
-        scrollTextKrypto.setLocation(595, 52);
-
-        deszyfrujPrzycisk.setSize(100, 40);
-        szyfrujPrzycisk.setSize(100, 40);
-        kryptoanalizaPrzycisk.setSize(150, 40);
-        archiwumKluczyPrzycisk.setSize(150,40);
-        wczytajPrzycisk.setSize(82,40);
-        autorzyPrzycisk.setSize(100, 40);
-
-        scrollText2.setSize(400, 180);
-        kluczWejscie.setSize(200, 40);
-        scrollText.setSize(400, 180);
-        scrollTextStat.setSize(180, 400);
-        scrollTextKrypto.setSize(180, 400);
-
-        okno.add(deszyfrujPrzycisk);
-        okno.add(szyfrujPrzycisk);
-        okno.add(kryptoanalizaPrzycisk);
-        okno.add(archiwumKluczyPrzycisk);
-        okno.add(wczytajPrzycisk);
-        okno.add(autorzyPrzycisk);
-        okno.add(scrollText2);
-        okno.add(kluczWejscie);
-        okno.add(scrollText);
-        okno.add(scrollTextStat);
-        okno.add(scrollTextKrypto);
-        okno.add(tekst1);
-        okno.add(tekst2);
-        okno.add(tekst3);
         okno.add(tekst4);
 
         setSize(795, 530);
