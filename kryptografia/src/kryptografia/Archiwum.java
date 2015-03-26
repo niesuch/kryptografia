@@ -17,7 +17,7 @@ public class Archiwum extends JFrame {
      */
     public Archiwum(String klucze) {
         super("Archiwum");
-        String[] archiwum = klucze.split(" ");
+        String[] archiwum = klucze.split("\n");
         JList lista = new JList(archiwum);
         lista.setSelectedIndex(1);
         

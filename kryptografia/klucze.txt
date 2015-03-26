@@ -1,13 +1,6 @@
 QWERTY
 CVBNM
 FGHJK
-IOP
-YUIasd
-vbn
-erty
-kamil
-qwe
-ASD
-cmk
-cmks
-
+IOPQWERTY
+QWERTY
+QWERTY
