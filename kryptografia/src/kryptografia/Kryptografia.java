@@ -562,7 +562,8 @@ public class Kryptografia extends JFrame {
     }
     
     /**
-     * Wyświetla okno wyboru pliku do wczytania i wczytuje jego sciezke
+     * Wyświetla okno wyboru pliku do wczytania lub zapisu oraz 
+     * pobiera jego sciezke
      * @return 
      */
     private String wczytajSciezkePlikuZdysku(String opcja) {
