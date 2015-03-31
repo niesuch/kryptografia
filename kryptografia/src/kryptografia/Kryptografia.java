@@ -14,14 +14,16 @@ import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class Kryptografia extends JFrame {
 
     private static JTextField kluczWejscie;
-    private static JTextArea textWyjscie, textWejscie, textStat, textKrypto;
-    private JScrollPane scrollText, scrollText2, scrollTextStat, scrollTextKrypto;
+    private static JTextArea textWyjscie, textWejscie, textStat, textKrypto, textWzorcowa;
+    private JScrollPane scrollText, scrollText2, scrollTextStat, scrollTextKrypto, scrollTextWzorcowa;
     private JButton szyfrujPrzycisk, deszyfrujPrzycisk, kryptoanalizaPrzycisk, archiwumKluczyPrzycisk,
-            wczytajPrzycisk, autorzyPrzycisk, zapiszSzyfrPrzycisk, wczytajSzyfrPrzycisk;
+            wczytajPrzycisk, autorzyPrzycisk, zapiszSzyfrPrzycisk, wczytajSzyfrPrzycisk, zamianaMiejscPrzycisk,
+            uzupelnijPrzycisk, wczytajWzorcowaPrzycisk, wygenerujWzorcowaPrzycisk, zapiszWzorcowaPrzycisk;
     private PrzyciskSzyfruj obslugaSzyfruj;
     private PrzyciskDeszyfruj obslugaDeszyfruj;
     private PrzyciskKryptoanaliza obslugaKryptoanaliza;
@@ -30,6 +32,11 @@ public class Kryptografia extends JFrame {
     private PrzyciskAutorzy obslugaAutorzy;
     private PrzyciskZapiszSzyfr obslugaZapiszSzyfr;
     private PrzyciskWczytajSzyfr obslugaWczytajSzyfr;
+    private PrzyciskZamianaMiejsc obslugaZamianaMiejsc;
+    private PrzyciskUzupelnij obslugaUzupelnij;
+    private PrzyciskWczytajWzorcowa obslugaWczytajWzorcowa;
+    private PrzyciskWygenerujWzorcowa obslugaWygenerujWzorcowa;
+    private PrzyciskZapiszWzorcowa obslugaZapiszWzorcowa;
     private String kluczKryptoanaliza;
 
     /**
@@ -55,7 +62,7 @@ public class Kryptografia extends JFrame {
         textStat.setWrapStyleWord(true);
         textStat.setEditable(false);
         scrollTextStat.setLocation(410, 52);
-        scrollTextStat.setSize(180, 400);
+        scrollTextStat.setSize(180, 447);
         okno.add(scrollTextStat);
         
         textKrypto = new JTextArea("", 800, 50);
@@ -63,85 +70,136 @@ public class Kryptografia extends JFrame {
         scrollTextKrypto.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         textKrypto.setLineWrap(true);
         textKrypto.setWrapStyleWord(true);
-        scrollTextKrypto.setLocation(595, 52);
-        scrollTextKrypto.setSize(180, 400);
+        scrollTextKrypto.setLocation(780, 52);
+        scrollTextKrypto.setSize(180, 447);
         okno.add(scrollTextKrypto);
+        
+        textWzorcowa = new JTextArea("", 800, 50);
+        scrollTextWzorcowa = new JScrollPane(textWzorcowa);
+        scrollTextWzorcowa.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        textWzorcowa.setLineWrap(true);
+        textWzorcowa.setWrapStyleWord(true);
+        textWzorcowa.setEditable(false);
+        scrollTextWzorcowa.setLocation(595, 52);
+        scrollTextWzorcowa.setSize(180, 447);
+        okno.add(scrollTextWzorcowa);
 
         textWyjscie = new JTextArea("", 50, 895);
         scrollText = new JScrollPane(textWyjscie);
         scrollText.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);        
         textWyjscie.setLineWrap(true);
         textWyjscie.setWrapStyleWord(false);
-        textWyjscie.setEditable(false);
-        scrollText.setLocation(5, 273);
+        //textWyjscie.setEditable(false);
+        scrollText.setLocation(5, 320);
         scrollText.setSize(400, 180);
         okno.add(scrollText);
         
         kluczWejscie = new JTextField(3);
-        kluczWejscie.setLocation(100, 233);
+        kluczWejscie.setLocation(115, 243);
         kluczWejscie.setSize(200, 40);
         okno.add(kluczWejscie);
 
         szyfrujPrzycisk = new JButton("Szyfruj");
         obslugaSzyfruj = new PrzyciskSzyfruj();
         szyfrujPrzycisk.addActionListener(obslugaSzyfruj);
-        szyfrujPrzycisk.setLocation(5, 452);
+        szyfrujPrzycisk.setLocation(5, 502);
         szyfrujPrzycisk.setSize(150, 20);
         okno.add(szyfrujPrzycisk);
         
         deszyfrujPrzycisk = new JButton("Deszyfruj");
         obslugaDeszyfruj = new PrzyciskDeszyfruj();
         deszyfrujPrzycisk.addActionListener(obslugaDeszyfruj);
-        deszyfrujPrzycisk.setLocation(165, 452);
+        deszyfrujPrzycisk.setLocation(165, 502);
         deszyfrujPrzycisk.setSize(150, 20);
         okno.add(deszyfrujPrzycisk);
         
         kryptoanalizaPrzycisk = new JButton("Start Kryptoanaliza");
         obslugaKryptoanaliza = new PrzyciskKryptoanaliza();
         kryptoanalizaPrzycisk.addActionListener(obslugaKryptoanaliza);
-        kryptoanalizaPrzycisk.setLocation(485, 452);
+        kryptoanalizaPrzycisk.setLocation(485, 502);
         kryptoanalizaPrzycisk.setSize(150, 20);
         okno.add(kryptoanalizaPrzycisk);
         
         archiwumKluczyPrzycisk = new JButton("Archiwum kluczy");
         obslugaArchiwumKluczy = new PrzyciskArchiwumKluczy();
         archiwumKluczyPrzycisk.addActionListener(obslugaArchiwumKluczy);
-        archiwumKluczyPrzycisk.setLocation(325, 452);
+        archiwumKluczyPrzycisk.setLocation(325, 502);
         archiwumKluczyPrzycisk.setSize(150,20);
         okno.add(archiwumKluczyPrzycisk);
         
-        zapiszSzyfrPrzycisk = new JButton("Zapisz szyfr");
+        zapiszSzyfrPrzycisk = new JButton("Zapisz szyfrogram");
         obslugaZapiszSzyfr = new PrzyciskZapiszSzyfr();
         zapiszSzyfrPrzycisk.addActionListener(obslugaZapiszSzyfr);
-        zapiszSzyfrPrzycisk.setLocation(165, 472);
+        zapiszSzyfrPrzycisk.setLocation(165, 522);
         zapiszSzyfrPrzycisk.setSize(150,20);
         okno.add(zapiszSzyfrPrzycisk);
         
-        wczytajSzyfrPrzycisk = new JButton("Wczytaj szyfr");
+        wczytajSzyfrPrzycisk = new JButton("Wczytaj szyfrogram");
         obslugaWczytajSzyfr = new PrzyciskWczytajSzyfr();
         wczytajSzyfrPrzycisk.addActionListener(obslugaWczytajSzyfr);
-        wczytajSzyfrPrzycisk.setLocation(5, 472);
+        wczytajSzyfrPrzycisk.setLocation(5, 522);
         wczytajSzyfrPrzycisk.setSize(150,20);
         okno.add(wczytajSzyfrPrzycisk);
+        
+        wczytajWzorcowaPrzycisk = new JButton("Wczytaj stat.wzorcową");
+        obslugaWczytajWzorcowa = new PrzyciskWczytajWzorcowa();
+        wczytajWzorcowaPrzycisk.addActionListener(obslugaWczytajWzorcowa);
+        wczytajWzorcowaPrzycisk.setLocation(325, 522);
+        wczytajWzorcowaPrzycisk.setSize(150,20);
+        okno.add(wczytajWzorcowaPrzycisk);
+        
+        wygenerujWzorcowaPrzycisk = new JButton("Wygeneruj stat.wzorcową");
+        obslugaWygenerujWzorcowa = new PrzyciskWygenerujWzorcowa();
+        wygenerujWzorcowaPrzycisk.addActionListener(obslugaWygenerujWzorcowa);
+        wygenerujWzorcowaPrzycisk.setLocation(645, 522);
+        wygenerujWzorcowaPrzycisk.setSize(150,20);
+        okno.add(wygenerujWzorcowaPrzycisk);
+        
+        zapiszWzorcowaPrzycisk = new JButton("Zapisz stat.wzorcową");
+        obslugaZapiszWzorcowa = new PrzyciskZapiszWzorcowa();
+        zapiszWzorcowaPrzycisk.addActionListener(obslugaZapiszWzorcowa);
+        zapiszWzorcowaPrzycisk.setLocation(485, 522);
+        zapiszWzorcowaPrzycisk.setSize(150,20);
+        okno.add(zapiszWzorcowaPrzycisk);
         
         wczytajPrzycisk = new JButton("Wczytaj");
         obslugaWczytaj = new PrzyciskWczytaj();
         wczytajPrzycisk.addActionListener(obslugaWczytaj);
-        wczytajPrzycisk.setLocation(305, 243);
+        wczytajPrzycisk.setLocation(320, 243);
         wczytajPrzycisk.setSize(82,20);     
         okno.add(wczytajPrzycisk);
+        
+        uzupelnijPrzycisk = new JButton("Uzupełnij");
+        obslugaUzupelnij = new PrzyciskUzupelnij();
+        uzupelnijPrzycisk.addActionListener(obslugaUzupelnij);
+        uzupelnijPrzycisk.setLocation(320, 263);
+        uzupelnijPrzycisk.setSize(82,20);     
+        okno.add(uzupelnijPrzycisk);
         
         autorzyPrzycisk = new JButton("Autorzy");
         obslugaAutorzy = new PrzyciskAutorzy();
         autorzyPrzycisk.addActionListener(obslugaAutorzy);
-        autorzyPrzycisk.setLocation(700,472);
+        autorzyPrzycisk.setLocation(885,0);
         autorzyPrzycisk.setSize(80, 20);
         okno.add(autorzyPrzycisk);
+        
+        zamianaMiejscPrzycisk = new JButton();
+        try {
+            Image img = ImageIO.read(getClass().getResource("/resources/strzalki.png"));
+            zamianaMiejscPrzycisk.setIcon(new ImageIcon(img));
+        } catch (IOException ex) {
+            System.out.println("Problem z załadowaniem obrazka strzalki.png");
+        }
+        obslugaZamianaMiejsc = new PrzyciskZamianaMiejsc();
+        zamianaMiejscPrzycisk.addActionListener(obslugaZamianaMiejsc);
+        zamianaMiejscPrzycisk.setLocation(10,250);
+        zamianaMiejscPrzycisk.setSize(20, 27);
+        okno.add(zamianaMiejscPrzycisk);
 
         setTitle("Kryptografia");
         
         Font czcionka =  new Font("Courier New", Font.BOLD, 17);
-        JLabel tekst1 = new JLabel("Tekst do szyfrowania:", SwingConstants.LEFT);
+        JLabel tekst1 = new JLabel("Tekst jawny:", SwingConstants.LEFT);
         tekst1.setSize(300, 20);
         tekst1.setLocation(5, 30);
         tekst1.setFont(czcionka);
@@ -149,11 +207,11 @@ public class Kryptografia extends JFrame {
         
         JLabel tekst2 = new JLabel("Klucz:", SwingConstants.LEFT);
         tekst2.setSize(300, 20);
-        tekst2.setLocation(25, 245);
+        tekst2.setLocation(50, 255);
         tekst2.setFont(czcionka);
         okno.add(tekst2);
         
-        JLabel tekst3 = new JLabel("Charakterystyka", SwingConstants.LEFT);
+        JLabel tekst3 = new JLabel("Charakt.szyfrogr.", SwingConstants.LEFT);
         tekst3.setSize(300, 20);
         tekst3.setLocation(410, 30);
         tekst3.setFont(czcionka);
@@ -161,11 +219,23 @@ public class Kryptografia extends JFrame {
         
         JLabel tekst4 = new JLabel("Kryptoanaliza", SwingConstants.LEFT);
         tekst4.setSize(300, 20);
-        tekst4.setLocation(600, 30);
+        tekst4.setLocation(780, 30);
         tekst4.setFont(czcionka);
         okno.add(tekst4);
+        
+        JLabel tekst5 = new JLabel("Szyfrogram:", SwingConstants.LEFT);
+        tekst5.setSize(300, 20);
+        tekst5.setLocation(5, 298);
+        tekst5.setFont(czcionka);
+        okno.add(tekst5);
+        
+        JLabel tekst6 = new JLabel("Stat.wzorcowa", SwingConstants.LEFT);
+        tekst6.setSize(300, 20);
+        tekst6.setLocation(595, 30);
+        tekst6.setFont(czcionka);
+        okno.add(tekst6);
 
-        setSize(795, 530);
+        setSize(980, 585);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
@@ -187,6 +257,7 @@ public class Kryptografia extends JFrame {
             String klucz = kluczWejscie.getText();
             klucz = dodajAlfabet(klucz.toUpperCase());
             textWyjscie.setText("");
+            kluczWejscie.setText(klucz);
             
             char[] tab_tresc = tresc.toUpperCase().toCharArray();
             char[] tab_klucz = klucz.toCharArray();
@@ -220,27 +291,32 @@ public class Kryptografia extends JFrame {
         public void actionPerformed(ActionEvent e) {
             String tresc = textWejscie.getText().trim();
             String klucz = kluczWejscie.getText();
-            klucz = dodajAlfabet(klucz.toUpperCase());
             textWyjscie.setText("");
             
-            String alfabet = pobierzAlfabet();
-            char[] tab_alfabet = alfabet.toCharArray();
-            char[] tab_tresc = tresc.toUpperCase().toCharArray();
+            if(klucz.length() != 26)
+                JOptionPane.showMessageDialog(null, "Podany klucz nie ma 26 znaków!\n"
+                        + "Wczytaj klucz z archiwum bądź popraw już wpisany.");            
+            else {
+                String alfabet = pobierzAlfabet();
+                char[] tab_alfabet = alfabet.toCharArray();
+                char[] tab_tresc = tresc.toUpperCase().toCharArray();
 
-            for (int i = 0; i < tresc.length(); i++) {
-                int pozycja = sprawdzPozycjeKlucz(tab_tresc[i], klucz);
-                char deszyfruj;
-                
-                if(pozycja == -1)
-                    deszyfruj = tab_tresc[i];
-                else
-                    deszyfruj = tab_alfabet[pozycja];
-                
-                textWyjscie.append(Character.toString(deszyfruj));
+                for (int i = 0; i < tresc.length(); i++) {
+                    int pozycja = sprawdzPozycjeKlucz(tab_tresc[i], klucz);
+                    char deszyfruj;
+
+                    if (pozycja == -1) {
+                        deszyfruj = tab_tresc[i];
+                    } else {
+                        deszyfruj = tab_alfabet[pozycja];
+                    }
+
+                    textWyjscie.append(Character.toString(deszyfruj));
+                }
+
+                String charakterystyka = wyznaczCharakterystyke(textWyjscie.getText());
+                textStat.setText(charakterystyka);
             }
-            
-            String charakterystyka = wyznaczCharakterystyke(textWyjscie.getText());
-            textStat.setText(charakterystyka);
         }
     }
     
@@ -280,9 +356,9 @@ public class Kryptografia extends JFrame {
     private class PrzyciskAutorzy implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             JOptionPane.showMessageDialog(null, "Autorzy:"
-                                              + "\n- Kamil Niesłuchowski"
-                                              + "\n- Mateusz Goniprowski"
-                                              + "\n- Paweł Załuska");
+                                              + "\n- Goniprowski Mateusz"
+                                              + "\n- Niesłuchowski Kamil"
+                                              + "\n- Załuska Paweł");
         }
     }
     
@@ -299,7 +375,7 @@ public class Kryptografia extends JFrame {
     }
     
     /**
-     * Obsługa przycisku "Zapisz szyfr"
+     * Obsługa przycisku "Zapisz szyfrogram"
      */
     private class PrzyciskZapiszSzyfr implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -310,7 +386,7 @@ public class Kryptografia extends JFrame {
     }
     
     /**
-     * Obsługa przycisku "Wczytaj szyfr"
+     * Obsługa przycisku "Wczytaj szyfrogram"
      */
     private class PrzyciskWczytajSzyfr implements ActionListener {
 
@@ -325,25 +401,111 @@ public class Kryptografia extends JFrame {
     }
     
     /**
+     * Obsługa przycisku "Strzałki"
+     */
+    private class PrzyciskZamianaMiejsc implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String pomoc = textWejscie.getText();
+            textWejscie.setText(textWyjscie.getText());
+            textWyjscie.setText(pomoc);
+        }
+    }
+    
+    /**
+     * Obsługa przycisku "Uzupełnij"
+     */
+    private class PrzyciskUzupelnij implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String klucz = kluczWejscie.getText();
+            klucz = dodajAlfabet(klucz.toUpperCase());
+            kluczWejscie.setText(klucz);
+        }
+    }
+    
+    /**
+     * Obsługa przycisku "Wczytaj stat.wzorcowa"
+     */
+    private class PrzyciskWczytajWzorcowa implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String plik = wczytajSciezkePlikuZdysku("wczytaj");
+            if (plik != "") {
+                String text = wczytajZpliku(plik);
+                textWzorcowa.setText(text);
+            }
+        }
+    }
+    
+    /**
+     * Obsługa przycisku "Wygeneruj stat wzorcowa"
+     */
+    private class PrzyciskWygenerujWzorcowa implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String plik = wczytajSciezkePlikuZdysku("wczytaj");
+            if (plik != "") {
+                String text = wczytajZpliku(plik);
+                String charakterystyka = wyznaczCharakterystyke(text.toUpperCase());
+                textWzorcowa.setText(charakterystyka);
+            }
+        }
+    }
+    
+    /**
+     * Obsługa przycisku "Zapisz stat wzorcowa"
+     */
+    private class PrzyciskZapiszWzorcowa implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String plik = wczytajSciezkePlikuZdysku("zapisz");
+            if (plik != "")
+                zapiszDoPliku(textWzorcowa.getText(), plik, false);
+        }
+    }
+    
+    
+    /**
      * Modyfikuje wpisany przez użytkownika klucz o znaki niepowtarzające się
      * @param klucz
      * @return 
      */
-    public static String dodajAlfabet(String klucz) {
+    public String dodajAlfabet(String klucz) {
+        String wymieszanyAlfabet = wymieszajAlfabet(pobierzAlfabet());
+        char[] tab_wymieszanyAlfabet = wymieszanyAlfabet.toCharArray();      
         char[] znaki = klucz.toCharArray();
-
-        for (char ch = 'A'; ch <= 'Z'; ++ch) {
+        
+        for(int i=0; i<tab_wymieszanyAlfabet.length; i++) {
             boolean poprawnosc = false;
-            for (int i = 0; i < znaki.length; i++)
-                if (znaki[i] == ch)
+            
+            for(int j=0; j<znaki.length; j++)
+                if(znaki[j] == tab_wymieszanyAlfabet[i]) {
                     poprawnosc = true;
-            if (!poprawnosc)
-                klucz += ch;
+                    break;
+                }
+            if(!poprawnosc)
+                klucz += tab_wymieszanyAlfabet[i];
         }
         
         return klucz;
     }
-    
+
+    /**
+     * Miesza litery w alfabecie
+     * @param text
+     * @return 
+     */
+    static String wymieszajAlfabet(String text) {
+        if (text.length() <= 1)
+            return text;
+
+        int split = text.length() / 2;
+
+        String temp1 = wymieszajAlfabet(text.substring(0, split));
+        String temp2 = wymieszajAlfabet(text.substring(split));
+
+        if (Math.random() > 0.5)
+            return temp1 + temp2;
+        else
+            return temp2 + temp1;
+    }
+
     /**
      * Sprawdza pozycję danego znaku w alfabecie
      * @param znak
@@ -410,6 +572,7 @@ public class Kryptografia extends JFrame {
      */
     public String wyznaczCharakterystyke(String text) {
         String charakterystyka = "";
+        
         for(char ch = 'A'; ch <= 'Z'; ++ch) {
             charakterystyka += ch;
             charakterystyka += " = ";
@@ -421,6 +584,15 @@ public class Kryptografia extends JFrame {
             charakterystyka += " (";
             charakterystyka += Float.toString(srednia);
             charakterystyka += ")";
+            charakterystyka += '\n';
+        }
+        
+        int[] tab_pozycji = sortujCharakterystyke(charakterystyka);
+        String[] tab_charakterystyka = charakterystyka.split("\n");
+        
+        charakterystyka = "";
+        for(int i=0; i<tab_charakterystyka.length; i++) {
+            charakterystyka += tab_charakterystyka[tab_pozycji[i]];
             charakterystyka += '\n';
         }
         
@@ -552,7 +724,7 @@ public class Kryptografia extends JFrame {
      */
     public int sprawdzCzyKluczSiePowtarza(String klucz) {
         String archiwum = wczytajZpliku("klucze.txt");
-        String[] tab_archiwum = archiwum.split("\n");
+        String[] tab_archiwum = archiwum.split("\\r?\\n");
         
         for(int i=0; i<tab_archiwum.length; i++) {
             if(tab_archiwum[i].equals(klucz.toUpperCase()))
@@ -579,6 +751,67 @@ public class Kryptografia extends JFrame {
             return fc.getSelectedFile().getAbsolutePath();
         else
             return null;
+    }
+    
+    /**
+     * Sortowanie charakterystyki od największej ilości znaków do najmniejszej
+     * Zwraca tablice pozycji posortowanych rekordów
+     * @param charakterystyka
+     * @return 
+     */
+    private int[] sortujCharakterystyke(String charakterystyka) {
+        String[] tab = charakterystyka.split(" = ");
+        String[] inty = new String[26];
+        int[] tab_inty = new int[26];
+        int[] tab_inty2 = new int[26];
+        int[] tab_pozycje = new int[26];
+
+        // sprawdzanie ile znaków ma liczba
+        for(int i=1; i<tab.length; i++) {
+            for(int j=1; true; j++) {
+                if(tab[i].toString().substring(j,j+1).indexOf(" ") == 0) {
+                    inty[i-1] = tab[i].toString().substring(0,j);
+                    break;
+                }
+                
+//            if(tab[i].toString().substring(1,2).indexOf(" ") == 0)
+//                inty[i-1] = tab[i].toString().substring(0,1);
+//            else if(tab[i].toString().substring(2,3).indexOf(" ") == 0) 
+//                inty[i-1] = tab[i].toString().substring(0,2);
+//            else if(tab[i].toString().substring(3,4).indexOf(" ") == 0) 
+//                inty[i-1] = tab[i].toString().substring(0,3);
+//            else if(tab[i].toString().substring(4,5).indexOf(" ") == 0) 
+//                inty[i-1] = tab[i].toString().substring(0,4);
+            }
+            tab_inty[i-1] = Integer.parseInt(inty[i-1]);
+            tab_inty2[i-1] = Integer.parseInt(inty[i-1]);
+        }
+        
+        // sortowanie bąbelkowe
+        for (int i=0; i<tab_inty.length; i++) {
+            for (int j=0; j<tab_inty.length-1; j++) {
+                if (tab_inty[j] > tab_inty[j + 1]) {
+                    int temp = tab_inty[j+1];
+                    tab_inty[j+1] = tab_inty[j];
+                    tab_inty[j] = temp;
+                }
+            }
+        }
+        
+        // wyznaczanie pozycji
+        // po wyznaczeniu kolejnej pozycji tab_inty2[j]=-1 zeby uniknąć powtórzeń
+        int k=0;
+        for (int i=tab_inty.length-1; i>=0; i--) {
+            for (int j=0; j<tab_inty2.length; j++) {
+                if(tab_inty[i] == tab_inty2[j]) {
+                    tab_pozycje[k++] = j;
+                    tab_inty2[j] = -1;
+                    break;
+                }
+            }
+        }
+        
+        return tab_pozycje;
     }
 
     /**
