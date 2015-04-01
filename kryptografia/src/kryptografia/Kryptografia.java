@@ -276,11 +276,9 @@ public class Kryptografia extends JFrame {
             
             String charakterystyka = wyznaczCharakterystyke(textWyjscie.getText());
             textStat.setText(charakterystyka);
-            if (!kluczWejscie.getText().isEmpty()) {
-                if (sprawdzCzyKluczSiePowtarza(kluczWejscie.getText()) == 1) {
+            if (!kluczWejscie.getText().isEmpty())
+                if (sprawdzCzyKluczSiePowtarza(kluczWejscie.getText()) == 1)
                     zapiszDoPliku(kluczWejscie.getText().toUpperCase(), "klucze.txt", true);
-                }
-            }
         }
     }
 
@@ -290,7 +288,7 @@ public class Kryptografia extends JFrame {
     private class PrzyciskDeszyfruj implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String tresc = textWejscie.getText().trim();
-            String klucz = kluczWejscie.getText();
+            String klucz = kluczWejscie.getText().replace("\r","");
             textWyjscie.setText("");
             
             if(klucz.length() != 26)
@@ -305,11 +303,10 @@ public class Kryptografia extends JFrame {
                     int pozycja = sprawdzPozycjeKlucz(tab_tresc[i], klucz);
                     char deszyfruj;
 
-                    if (pozycja == -1) {
+                    if (pozycja == -1)
                         deszyfruj = tab_tresc[i];
-                    } else {
+                    else
                         deszyfruj = tab_alfabet[pozycja];
-                    }
 
                     textWyjscie.append(Character.toString(deszyfruj));
                 }
@@ -332,8 +329,22 @@ public class Kryptografia extends JFrame {
             }
             else {
                 pobierzZmianyKryptoanalizy(textKrypto.getText());
-                if (textWejscie.getText() != "") {
-                    String kryptoanaliza = kryptoanalizuj(textWejscie.getText());
+                String wejscie = textWejscie.getText().toUpperCase();
+                if (wejscie != "") {
+                    String kryptoanaliza = kryptoanalizuj(wejscie);
+                    char[] tab_wejscie = wejscie.toCharArray();
+                    char[] tab_kryptoanaliza = kryptoanaliza.toCharArray();
+                    
+                    kryptoanaliza = "";
+                    for(int i=0; i<tab_kryptoanaliza.length; i++) {
+                        if(tab_wejscie[i] != tab_kryptoanaliza[i]) {
+                            String pomoc = "";
+                            pomoc += tab_kryptoanaliza[i];
+                            kryptoanaliza += pomoc.toLowerCase();
+                        }
+                        else
+                            kryptoanaliza += tab_kryptoanaliza[i];
+                    }
                     textWyjscie.setText(kryptoanaliza);
                 }
             }
@@ -428,7 +439,7 @@ public class Kryptografia extends JFrame {
     private class PrzyciskWczytajWzorcowa implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String plik = wczytajSciezkePlikuZdysku("wczytaj");
-            if (plik != "") {
+            if (plik != null) {
                 String text = wczytajZpliku(plik);
                 textWzorcowa.setText(text);
             }
@@ -441,7 +452,7 @@ public class Kryptografia extends JFrame {
     private class PrzyciskWygenerujWzorcowa implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String plik = wczytajSciezkePlikuZdysku("wczytaj");
-            if (plik != "") {
+            if (plik != null) {
                 String text = wczytajZpliku(plik);
                 String charakterystyka = wyznaczCharakterystyke(text.toUpperCase());
                 textWzorcowa.setText(charakterystyka);
@@ -455,7 +466,7 @@ public class Kryptografia extends JFrame {
     private class PrzyciskZapiszWzorcowa implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String plik = wczytajSciezkePlikuZdysku("zapisz");
-            if (plik != "")
+            if (plik != null)
                 zapiszDoPliku(textWzorcowa.getText(), plik, false);
         }
     }
@@ -675,6 +686,7 @@ public class Kryptografia extends JFrame {
     
     /**
      * Wczytuje z pliku
+     * @param nazwaPliku
      * @return 
      */
     public String wczytajZpliku(String nazwaPliku) {
@@ -704,6 +716,9 @@ public class Kryptografia extends JFrame {
     
     /**
      * Zapisuje do pliku
+     * @param text
+     * @param nazwaPliku
+     * @param CzyDopisacDoPliku 
      */
     public void zapiszDoPliku(String text, String nazwaPliku, Boolean CzyDopisacDoPliku) {
         try {
@@ -725,6 +740,7 @@ public class Kryptografia extends JFrame {
     public int sprawdzCzyKluczSiePowtarza(String klucz) {
         String archiwum = wczytajZpliku("klucze.txt");
         String[] tab_archiwum = archiwum.split("\\r?\\n");
+        klucz = klucz.replace("\r","");
         
         for(int i=0; i<tab_archiwum.length; i++) {
             if(tab_archiwum[i].equals(klucz.toUpperCase()))
@@ -768,48 +784,34 @@ public class Kryptografia extends JFrame {
 
         // sprawdzanie ile znaków ma liczba
         for(int i=1; i<tab.length; i++) {
-            for(int j=1; true; j++) {
+            for(int j=1; true; j++)
                 if(tab[i].toString().substring(j,j+1).indexOf(" ") == 0) {
                     inty[i-1] = tab[i].toString().substring(0,j);
                     break;
                 }
-                
-//            if(tab[i].toString().substring(1,2).indexOf(" ") == 0)
-//                inty[i-1] = tab[i].toString().substring(0,1);
-//            else if(tab[i].toString().substring(2,3).indexOf(" ") == 0) 
-//                inty[i-1] = tab[i].toString().substring(0,2);
-//            else if(tab[i].toString().substring(3,4).indexOf(" ") == 0) 
-//                inty[i-1] = tab[i].toString().substring(0,3);
-//            else if(tab[i].toString().substring(4,5).indexOf(" ") == 0) 
-//                inty[i-1] = tab[i].toString().substring(0,4);
-            }
             tab_inty[i-1] = Integer.parseInt(inty[i-1]);
             tab_inty2[i-1] = Integer.parseInt(inty[i-1]);
         }
         
         // sortowanie bąbelkowe
-        for (int i=0; i<tab_inty.length; i++) {
-            for (int j=0; j<tab_inty.length-1; j++) {
+        for (int i=0; i<tab_inty.length; i++)
+            for (int j=0; j<tab_inty.length-1; j++)
                 if (tab_inty[j] > tab_inty[j + 1]) {
                     int temp = tab_inty[j+1];
                     tab_inty[j+1] = tab_inty[j];
                     tab_inty[j] = temp;
                 }
-            }
-        }
         
         // wyznaczanie pozycji
         // po wyznaczeniu kolejnej pozycji tab_inty2[j]=-1 zeby uniknąć powtórzeń
         int k=0;
-        for (int i=tab_inty.length-1; i>=0; i--) {
-            for (int j=0; j<tab_inty2.length; j++) {
+        for (int i=tab_inty.length-1; i>=0; i--)
+            for (int j=0; j<tab_inty2.length; j++)
                 if(tab_inty[i] == tab_inty2[j]) {
                     tab_pozycje[k++] = j;
                     tab_inty2[j] = -1;
                     break;
                 }
-            }
-        }
         
         return tab_pozycje;
     }
