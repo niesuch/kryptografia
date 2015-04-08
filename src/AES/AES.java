@@ -1,11 +1,5 @@
 package AES;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import javax.xml.bind.DatatypeConverter;
-
 public class AES {
 
 	private static int Nb, Nk, Nr;
