@@ -62,7 +62,8 @@ public class AES {
                                             0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 0x74, 0xe8, 0xcb, 0x8d, 0x01, 0x02, 0x04, 
                                             0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36, 0x6c, 0xd8, 0xab, 0x4d, 0x9a, 0x2f, 0x5e, 0xbc, 0x63, 
                                             0xc6, 0x97, 0x35, 0x6a, 0xd4, 0xb3, 0x7d, 0xfa, 0xef, 0xc5, 0x91, 0x39, 0x72, 0xe4, 0xd3, 0xbd, 
-                                            0x61, 0xc2, 0x9f, 0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 0x74, 0xe8, 0xcb };
+                                            0x61, 0xc2, 0x9f, 0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 0x74, 0xe8, 0xcb, 0x8d
+                                        };
 
 	private static byte[] xor_func(byte[] a, byte[] b) {
 		byte[] out = new byte[a.length];
@@ -357,20 +358,4 @@ public class AES {
 		System.arraycopy(input, 0, tmp, 0, tmp.length);
 		return tmp;
 	}
-//        static public void main(String[] args){
-//                AES aes = new AES();
-//                String tekst = new String("Anyone who reads Old and Middle English literary texts will be familiar with the mid-brown volumes of the EETS, with the symbol of Alfred's jewel embossed on the front cover. Most of the works attributed to King Alfred or to Aelfric, along with some of those by bishop Wulfstan and much anonymous prose and verse from the pre-Conquest period, are to be found within the Society's three series; all of the surviving medieval drama, most of the Middle English romances, much religious and secular prose and verse including the English works of John Gower, Thomas Hoccleve and most of Caxton's prints all find their place in the publications. Without EETS editions, study of medieval English texts would hardly be possible. As its name states, EETS was begun as a 'club', and it retains certain features of that even now. It has no physical location, or even office, no paid staff or editors, but books in the Original Series are published in the first place to satisfy subscriptions paid by individuals or institutions. This means that there is need for a regular sequence of new editions, normally one or two per year; achieving that sequence can pose problems for the Editorial Secretary, who may have too few or too many texts ready for publication at any one time. Details on a separate sheet explain how individual (but not institutional) members can choose to take certain back volumes in place of the newly published volumes against their subscriptions. On the same sheet are given details about the very advantageous discount available to individual members on all back numbers. In 1970 a Supplementary Series was begun, a series which only appears occasionally (it currently has 24 volumes within it); some of these are new editions of texts earlier appearing in the main series. Again these volumes are available at publication and later at a substantial discount to members. All these advantages can only be obtained through the Membership Secretary (the books are sent by post); they are not available through bookshops, and such bookstores as carry EETS books have only a very limited selection of the many published.");
-//                String klucz = new String("770A8A65DA156D24EE2A093277530142");
-//                String zaszyfrowane;
-//                try{
-//                    zaszyfrowane = new String (aes.encrypt(tekst.getBytes("UTF-8"), DatatypeConverter.parseHexBinary(klucz)), "UTF-8");
-//                    System.out.println("Zaszyfrowany:");
-//                    System.out.println(zaszyfrowane);
-//                    String odszyfrowany = new String(aes.decrypt(zaszyfrowane.getBytes(), DatatypeConverter.parseHexBinary(klucz)));
-//                    System.out.println("Odszyfrowany");
-//                System.out.println(odszyfrowany);
-//                }catch (UnsupportedEncodingException e){
-//                    System.out.println("Coś poszło nie tak");
-//                }          
-//        }
 }
