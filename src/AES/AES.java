@@ -1,6 +1,15 @@
 package AES;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import javax.xml.bind.DatatypeConverter;
+
 public class AES {
+
+	private static int Nb, Nk, Nr;
+	private static byte[][] w;
 
 	private static int[] sbox = {       0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01, 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76,
                                             0xCA, 0x82, 0xC9, 0x7D, 0xFA, 0x59, 0x47, 0xF0, 0xAD, 0xD4, 0xA2, 0xAF, 0x9C, 0xA4, 0x72, 0xC0,
@@ -38,21 +47,330 @@ public class AES {
                                             0x17, 0x2B, 0x04, 0x7E, 0xBA, 0x77, 0xD6, 0x26, 0xE1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0C, 0x7D
                                         };
 
-	private static int Rcon[] = { 0x8d, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36, 0x6c, 0xd8, 0xab, 0x4d, 0x9a, 
-		0x2f, 0x5e, 0xbc, 0x63, 0xc6, 0x97, 0x35, 0x6a, 0xd4, 0xb3, 0x7d, 0xfa, 0xef, 0xc5, 0x91, 0x39, 
-		0x72, 0xe4, 0xd3, 0xbd, 0x61, 0xc2, 0x9f, 0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 
-		0x74, 0xe8, 0xcb, 0x8d, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36, 0x6c, 0xd8, 
-		0xab, 0x4d, 0x9a, 0x2f, 0x5e, 0xbc, 0x63, 0xc6, 0x97, 0x35, 0x6a, 0xd4, 0xb3, 0x7d, 0xfa, 0xef, 
-		0xc5, 0x91, 0x39, 0x72, 0xe4, 0xd3, 0xbd, 0x61, 0xc2, 0x9f, 0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 
-		0x83, 0x1d, 0x3a, 0x74, 0xe8, 0xcb, 0x8d, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 
-		0x36, 0x6c, 0xd8, 0xab, 0x4d, 0x9a, 0x2f, 0x5e, 0xbc, 0x63, 0xc6, 0x97, 0x35, 0x6a, 0xd4, 0xb3, 
-		0x7d, 0xfa, 0xef, 0xc5, 0x91, 0x39, 0x72, 0xe4, 0xd3, 0xbd, 0x61, 0xc2, 0x9f, 0x25, 0x4a, 0x94, 
-		0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 0x74, 0xe8, 0xcb, 0x8d, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 
-		0x40, 0x80, 0x1b, 0x36, 0x6c, 0xd8, 0xab, 0x4d, 0x9a, 0x2f, 0x5e, 0xbc, 0x63, 0xc6, 0x97, 0x35, 
-		0x6a, 0xd4, 0xb3, 0x7d, 0xfa, 0xef, 0xc5, 0x91, 0x39, 0x72, 0xe4, 0xd3, 0xbd, 0x61, 0xc2, 0x9f, 
-		0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 0x74, 0xe8, 0xcb, 0x8d, 0x01, 0x02, 0x04, 
-		0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36, 0x6c, 0xd8, 0xab, 0x4d, 0x9a, 0x2f, 0x5e, 0xbc, 0x63, 
-		0xc6, 0x97, 0x35, 0x6a, 0xd4, 0xb3, 0x7d, 0xfa, 0xef, 0xc5, 0x91, 0x39, 0x72, 0xe4, 0xd3, 0xbd, 
-		0x61, 0xc2, 0x9f, 0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 0x74, 0xe8, 0xcb };
+	private static int Rcon[] = {       0x8d, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36, 0x6c, 0xd8, 0xab, 0x4d, 0x9a,
+                                            0x2f, 0x5e, 0xbc, 0x63, 0xc6, 0x97, 0x35, 0x6a, 0xd4, 0xb3, 0x7d, 0xfa, 0xef, 0xc5, 0x91, 0x39, 
+                                            0x72, 0xe4, 0xd3, 0xbd, 0x61, 0xc2, 0x9f, 0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 
+                                            0x74, 0xe8, 0xcb, 0x8d, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36, 0x6c, 0xd8, 
+                                            0xab, 0x4d, 0x9a, 0x2f, 0x5e, 0xbc, 0x63, 0xc6, 0x97, 0x35, 0x6a, 0xd4, 0xb3, 0x7d, 0xfa, 0xef, 
+                                            0xc5, 0x91, 0x39, 0x72, 0xe4, 0xd3, 0xbd, 0x61, 0xc2, 0x9f, 0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 
+                                            0x83, 0x1d, 0x3a, 0x74, 0xe8, 0xcb, 0x8d, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 
+                                            0x36, 0x6c, 0xd8, 0xab, 0x4d, 0x9a, 0x2f, 0x5e, 0xbc, 0x63, 0xc6, 0x97, 0x35, 0x6a, 0xd4, 0xb3, 
+                                            0x7d, 0xfa, 0xef, 0xc5, 0x91, 0x39, 0x72, 0xe4, 0xd3, 0xbd, 0x61, 0xc2, 0x9f, 0x25, 0x4a, 0x94, 
+                                            0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 0x74, 0xe8, 0xcb, 0x8d, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 
+                                            0x40, 0x80, 0x1b, 0x36, 0x6c, 0xd8, 0xab, 0x4d, 0x9a, 0x2f, 0x5e, 0xbc, 0x63, 0xc6, 0x97, 0x35, 
+                                            0x6a, 0xd4, 0xb3, 0x7d, 0xfa, 0xef, 0xc5, 0x91, 0x39, 0x72, 0xe4, 0xd3, 0xbd, 0x61, 0xc2, 0x9f, 
+                                            0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 0x74, 0xe8, 0xcb, 0x8d, 0x01, 0x02, 0x04, 
+                                            0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36, 0x6c, 0xd8, 0xab, 0x4d, 0x9a, 0x2f, 0x5e, 0xbc, 0x63, 
+                                            0xc6, 0x97, 0x35, 0x6a, 0xd4, 0xb3, 0x7d, 0xfa, 0xef, 0xc5, 0x91, 0x39, 0x72, 0xe4, 0xd3, 0xbd, 
+                                            0x61, 0xc2, 0x9f, 0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 0x74, 0xe8, 0xcb };
 
+	private static byte[] xor_func(byte[] a, byte[] b) {
+		byte[] out = new byte[a.length];
+		for (int i = 0; i < a.length; i++) {
+			out[i] = (byte) (a[i] ^ b[i]);
+		}
+		return out;
+
+	}
+
+	private static byte[][] generateSubkeys(byte[] key) {
+		byte[][] tmp = new byte[Nb * (Nr + 1)][4];
+
+		int i = 0;
+		while (i < Nk) {
+
+			tmp[i][0] = key[i * 4];
+			tmp[i][1] = key[i * 4 + 1];
+			tmp[i][2] = key[i * 4 + 2];
+			tmp[i][3] = key[i * 4 + 3];
+			i++;
+		}
+		i = Nk;
+		while (i < Nb * (Nr + 1)) {
+			byte[] temp = new byte[4];
+			for(int k = 0;k<4;k++)
+				temp[k] = tmp[i-1][k];
+			if (i % Nk == 0) {
+				temp = SubWord(rotateWord(temp));
+				temp[0] = (byte) (temp[0] ^ (Rcon[i / Nk] & 0xff));
+			} else if (Nk > 6 && i % Nk == 4) {
+				temp = SubWord(temp);
+			}
+			tmp[i] = xor_func(tmp[i - Nk], temp);
+			i++;
+		}
+
+		return tmp;
+	}
+
+	private static byte[] SubWord(byte[] in) {
+		byte[] tmp = new byte[in.length];
+
+		for (int i = 0; i < tmp.length; i++)
+			tmp[i] = (byte) (sbox[in[i] & 0x000000ff] & 0xff);
+
+		return tmp;
+	}
+
+	private static byte[] rotateWord(byte[] input) {
+		byte[] tmp = new byte[input.length];
+		tmp[0] = input[1];
+		tmp[1] = input[2];
+		tmp[2] = input[3];
+		tmp[3] = input[0];
+
+		return tmp;
+	}
+
+	private static byte[][] AddRoundKey(byte[][] state, byte[][] w, int round) {
+
+		byte[][] tmp = new byte[state.length][state[0].length];
+
+		for (int c = 0; c < Nb; c++) {
+			for (int l = 0; l < 4; l++)
+				tmp[l][c] = (byte) (state[l][c] ^ w[round * Nb + c][l]);
+		}
+
+		return tmp;
+	}
+
+	private static byte[][] SubBytes(byte[][] state) {
+
+		byte[][] tmp = new byte[state.length][state[0].length];
+		for (int row = 0; row < 4; row++)
+			for (int col = 0; col < Nb; col++)
+				tmp[row][col] = (byte) (sbox[(state[row][col] & 0x000000ff)] & 0xff);
+
+		return tmp;
+	}
+	private static byte[][] InvSubBytes(byte[][] state) {
+		for (int row = 0; row < 4; row++) 
+			for (int col = 0; col < Nb; col++)
+				state[row][col] = (byte)(inv_sbox[(state[row][col] & 0x000000ff)]&0xff);
+		
+		return state;
+	}
+
+	private static byte[][] ShiftRows(byte[][] state) {
+
+		byte[] t = new byte[4];
+		for (int r = 1; r < 4; r++) {
+			for (int c = 0; c < Nb; c++)
+				t[c] = state[r][(c + r) % Nb];
+			for (int c = 0; c < Nb; c++)
+				state[r][c] = t[c];
+		}
+
+		return state;
+	}
+	
+	private static byte[][] InvShiftRows(byte[][] state) { 
+		byte[] t = new byte[4]; 
+		for (int r = 1; r < 4; r++) {
+			for (int c = 0; c < Nb; c++) 
+				t[(c + r)%Nb] = state[r][c];
+			for (int c = 0; c < Nb; c++) 
+				state[r][c] = t[c];
+		}
+	return state;
+	}
+
+	private static byte[][] InvMixColumns(byte[][] s){
+		 int[] sp = new int[4];
+	      byte b02 = (byte)0x0e, b03 = (byte)0x0b, b04 = (byte)0x0d, b05 = (byte)0x09;
+	      for (int c = 0; c < 4; c++) {
+	         sp[0] = FFMul(b02, s[0][c]) ^ FFMul(b03, s[1][c]) ^ FFMul(b04,s[2][c])  ^ FFMul(b05,s[3][c]);
+	         sp[1] = FFMul(b05, s[0][c]) ^ FFMul(b02, s[1][c]) ^ FFMul(b03,s[2][c])  ^ FFMul(b04,s[3][c]);
+	         sp[2] = FFMul(b04, s[0][c]) ^ FFMul(b05, s[1][c]) ^ FFMul(b02,s[2][c])  ^ FFMul(b03,s[3][c]);
+	         sp[3] = FFMul(b03, s[0][c]) ^ FFMul(b04, s[1][c]) ^ FFMul(b05,s[2][c])  ^ FFMul(b02,s[3][c]);
+	         for (int i = 0; i < 4; i++) s[i][c] = (byte)(sp[i]);
+	      }
+	      
+	      return s;
+	}
+	
+	private static byte[][] MixColumns(byte[][] s){
+		 int[] sp = new int[4];
+	      byte b02 = (byte)0x02, b03 = (byte)0x03;
+	      for (int c = 0; c < 4; c++) {
+	         sp[0] = FFMul(b02, s[0][c]) ^ FFMul(b03, s[1][c]) ^ s[2][c]  ^ s[3][c];
+	         sp[1] = s[0][c]  ^ FFMul(b02, s[1][c]) ^ FFMul(b03, s[2][c]) ^ s[3][c];
+	         sp[2] = s[0][c]  ^ s[1][c]  ^ FFMul(b02, s[2][c]) ^ FFMul(b03, s[3][c]);
+	         sp[3] = FFMul(b03, s[0][c]) ^ s[1][c]  ^ s[2][c]  ^ FFMul(b02, s[3][c]);
+	         for (int i = 0; i < 4; i++) s[i][c] = (byte)(sp[i]);
+	      }
+	      
+	      return s;
+	}
+
+	public static byte FFMul(byte a, byte b) {
+		byte aa = a, bb = b, r = 0, t;
+		while (aa != 0) {
+			if ((aa & 1) != 0)
+				r = (byte) (r ^ bb);
+			t = (byte) (bb & 0x80);
+			bb = (byte) (bb << 1);
+			if (t != 0)
+				bb = (byte) (bb ^ 0x1b);
+			aa = (byte) ((aa & 0xff) >> 1);
+		}
+		return r;
+	}
+
+	public static byte[] encryptBloc(byte[] in) {
+		byte[] tmp = new byte[in.length];
+		
+		
+
+		byte[][] state = new byte[4][Nb];
+
+		for (int i = 0; i < in.length; i++)
+			state[i / 4][i % 4] = in[i%4*4+i/4];
+
+		state = AddRoundKey(state, w, 0);
+		for (int round = 1; round < Nr; round++) {
+			state = SubBytes(state);
+			state = ShiftRows(state);
+			state = MixColumns(state);
+			state = AddRoundKey(state, w, round);
+		}
+		state = SubBytes(state);
+		state = ShiftRows(state);
+		state = AddRoundKey(state, w, Nr);
+
+		for (int i = 0; i < tmp.length; i++)
+			tmp[i%4*4+i/4] = state[i / 4][i%4];
+
+		return tmp;
+	}
+
+	public static byte[] decryptBloc(byte[] in) {
+		byte[] tmp = new byte[in.length];
+
+		byte[][] state = new byte[4][Nb];
+
+		for (int i = 0; i < in.length; i++)
+			state[i / 4][i % 4] = in[i%4*4+i/4];
+
+		state = AddRoundKey(state, w, Nr);
+		for (int round = Nr-1; round >=1; round--) {
+			state = InvSubBytes(state);
+			state = InvShiftRows(state);
+			state = AddRoundKey(state, w, round);
+			state = InvMixColumns(state);
+			
+		}
+		state = InvSubBytes(state);
+		state = InvShiftRows(state);
+		state = AddRoundKey(state, w, 0);
+
+		for (int i = 0; i < tmp.length; i++)
+			tmp[i%4*4+i/4] = state[i / 4][i%4];
+
+		return tmp;
+	}
+	
+	public static byte[] encrypt(byte[] in,byte[] key){
+		
+		Nb = 4;
+		Nk = key.length/4;
+		Nr = Nk + 6;
+		
+		
+		int lenght=0;
+		byte[] padding = new byte[1];
+		int i;
+		lenght = 16 - in.length % 16;				
+		padding = new byte[lenght];					
+		padding[0] = (byte) 0x80;
+		
+		for (i = 1; i < lenght; i++)				
+			padding[i] = 0;
+
+		byte[] tmp = new byte[in.length + lenght];		
+		byte[] bloc = new byte[16];							
+		
+		
+		w = generateSubkeys(key);
+		
+		int count = 0;
+
+		for (i = 0; i < in.length + lenght; i++) {
+			if (i > 0 && i % 16 == 0) {
+				bloc = encryptBloc(bloc);
+				System.arraycopy(bloc, 0, tmp, i - 16, bloc.length);
+			}
+			if (i < in.length)
+				bloc[i % 16] = in[i];
+			else{														
+				bloc[i % 16] = padding[count % 16];
+				count++;
+			}
+		}
+		if(bloc.length == 16){
+			bloc = encryptBloc(bloc);
+			System.arraycopy(bloc, 0, tmp, i - 16, bloc.length);
+		}
+		
+		return tmp;
+	}
+	
+	public static byte[] decrypt(byte[] in,byte[] key){
+		int i;
+		byte[] tmp = new byte[in.length];
+		byte[] bloc = new byte[16];
+		
+		
+		Nb = 4;
+		Nk = key.length/4;
+		Nr = Nk + 6;
+		w = generateSubkeys(key);
+
+
+		for (i = 0; i < in.length; i++) {
+			if (i > 0 && i % 16 == 0) {
+				bloc = decryptBloc(bloc);
+				System.arraycopy(bloc, 0, tmp, i - 16, bloc.length);
+			}
+			if (i < in.length)
+				bloc[i % 16] = in[i];
+		}
+		bloc = decryptBloc(bloc);
+		System.arraycopy(bloc, 0, tmp, i - 16, bloc.length);
+
+
+		tmp = deletePadding(tmp);
+
+		return tmp;
+	}
+	
+	private static byte[] deletePadding(byte[] input) {
+		int count = 0;
+
+		int i = input.length - 1;
+		while (input[i] == 0) {
+			count++;
+			i--;
+		}
+
+		byte[] tmp = new byte[input.length - count - 1];
+		System.arraycopy(input, 0, tmp, 0, tmp.length);
+		return tmp;
+	}
+//        static public void main(String[] args){
+//                AES aes = new AES();
+//                String tekst = new String("Anyone who reads Old and Middle English literary texts will be familiar with the mid-brown volumes of the EETS, with the symbol of Alfred's jewel embossed on the front cover. Most of the works attributed to King Alfred or to Aelfric, along with some of those by bishop Wulfstan and much anonymous prose and verse from the pre-Conquest period, are to be found within the Society's three series; all of the surviving medieval drama, most of the Middle English romances, much religious and secular prose and verse including the English works of John Gower, Thomas Hoccleve and most of Caxton's prints all find their place in the publications. Without EETS editions, study of medieval English texts would hardly be possible. As its name states, EETS was begun as a 'club', and it retains certain features of that even now. It has no physical location, or even office, no paid staff or editors, but books in the Original Series are published in the first place to satisfy subscriptions paid by individuals or institutions. This means that there is need for a regular sequence of new editions, normally one or two per year; achieving that sequence can pose problems for the Editorial Secretary, who may have too few or too many texts ready for publication at any one time. Details on a separate sheet explain how individual (but not institutional) members can choose to take certain back volumes in place of the newly published volumes against their subscriptions. On the same sheet are given details about the very advantageous discount available to individual members on all back numbers. In 1970 a Supplementary Series was begun, a series which only appears occasionally (it currently has 24 volumes within it); some of these are new editions of texts earlier appearing in the main series. Again these volumes are available at publication and later at a substantial discount to members. All these advantages can only be obtained through the Membership Secretary (the books are sent by post); they are not available through bookshops, and such bookstores as carry EETS books have only a very limited selection of the many published.");
+//                String klucz = new String("770A8A65DA156D24EE2A093277530142");
+//                String zaszyfrowane;
+//                try{
+//                    zaszyfrowane = new String (aes.encrypt(tekst.getBytes("UTF-8"), DatatypeConverter.parseHexBinary(klucz)), "UTF-8");
+//                    System.out.println("Zaszyfrowany:");
+//                    System.out.println(zaszyfrowane);
+//                    String odszyfrowany = new String(aes.decrypt(zaszyfrowane.getBytes(), DatatypeConverter.parseHexBinary(klucz)));
+//                    System.out.println("Odszyfrowany");
+//                System.out.println(odszyfrowany);
+//                }catch (UnsupportedEncodingException e){
+//                    System.out.println("Coś poszło nie tak");
+//                }          
+//        }
 }
