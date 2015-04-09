@@ -38,14 +38,14 @@ public class Kryptografia extends JFrame {
      * Konstruktor głównej klasy, inicjalizowanie wyglądu programu
      */
     public Kryptografia() {
-        Container okno = getContentPane();
-        okno.setLayout(null);
-        
         try {
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             System.err.println("Bład podczas ładowania wyglądu okna.");
         }
+        
+        Container okno = getContentPane();
+        okno.setLayout(null);
 
         textWejscie = new JTextArea("", 50, 895);
         scrollText2 = new JScrollPane(textWejscie);
@@ -141,7 +141,7 @@ public class Kryptografia extends JFrame {
         tekst5.setFont(czcionka);
         okno.add(tekst5);
 
-        setSize(580, 585);
+        setSize(530, 585);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
