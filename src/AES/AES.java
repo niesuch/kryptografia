@@ -334,12 +334,12 @@ public class AES {
 		System.arraycopy(blok, 0, tmp, i - 16, blok.length);
 
 
-		tmp = deletePadding(tmp);
+		tmp = usunNadmiar(tmp);
 
 		return tmp;
 	}
 	
-	private static byte[] deletePadding(byte[] wejscie) {
+	private static byte[] usunNadmiar(byte[] wejscie) {
 		int ilosc = 0;
 
 		int i = wejscie.length - 1;
