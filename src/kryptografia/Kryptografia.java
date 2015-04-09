@@ -40,6 +40,12 @@ public class Kryptografia extends JFrame {
     public Kryptografia() {
         Container okno = getContentPane();
         okno.setLayout(null);
+        
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            System.err.println("Bład podczas ładowania wyglądu okna.");
+        }
 
         textWejscie = new JTextArea("", 50, 895);
         scrollText2 = new JScrollPane(textWejscie);
