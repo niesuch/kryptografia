@@ -194,7 +194,7 @@ public class Kryptografia extends JFrame {
             start = System.nanoTime();
             new AES();
 
-            byte[] enc = AES.encrypt(Msg.getBytes(), tKey.getBytes());
+            byte[] enc = AES.szyfruj(Msg.getBytes(), tKey.getBytes());
 
             String CMsg = new String(enc);
             CMsg = toHexString(enc);
@@ -218,7 +218,7 @@ public class Kryptografia extends JFrame {
             new AES();
             byte[] CMsg = toByteArray(Msg);
 
-            byte[] dec = AES.decrypt(CMsg, tKey.getBytes());
+            byte[] dec = AES.odszyfruj(CMsg, tKey.getBytes());
 
             textWyjscie.append(new String(dec));
             end = System.nanoTime();
