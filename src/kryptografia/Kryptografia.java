@@ -44,6 +44,8 @@ public class Kryptografia extends JFrame {
             System.err.println("Bład podczas ładowania wyglądu okna.");
         }
         
+        this.setResizable(false);
+        
         Container okno = getContentPane();
         okno.setLayout(null);
 
@@ -141,7 +143,7 @@ public class Kryptografia extends JFrame {
         tekst5.setFont(czcionka);
         okno.add(tekst5);
 
-        setSize(530, 585);
+        setSize(520, 585);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
