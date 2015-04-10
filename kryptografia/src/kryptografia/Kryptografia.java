@@ -19,7 +19,7 @@ public class Kryptografia extends JFrame {
     private JScrollPane scrollText, scrollText2, scrollTextStat, scrollTextKrypto, scrollTextWzorcowa;
     private JButton szyfrujPrzycisk, deszyfrujPrzycisk, kryptoanalizaPrzycisk, archiwumKluczyPrzycisk,
             wczytajPrzycisk, autorzyPrzycisk, zapiszSzyfrPrzycisk, wczytajSzyfrPrzycisk, zamianaMiejscPrzycisk,
-            uzupelnijPrzycisk, wczytajWzorcowaPrzycisk, wygenerujWzorcowaPrzycisk, zapiszWzorcowaPrzycisk;
+            uzupelnijPrzycisk, wczytajWzorcowaPrzycisk, wygenerujWzorcowaPrzycisk, zapiszWzorcowaPrzycisk, zakonczPrzycisk;
     private PrzyciskSzyfruj obslugaSzyfruj;
     private PrzyciskDeszyfruj obslugaDeszyfruj;
     private PrzyciskKryptoanaliza obslugaKryptoanaliza;
@@ -33,6 +33,7 @@ public class Kryptografia extends JFrame {
     private PrzyciskWczytajWzorcowa obslugaWczytajWzorcowa;
     private PrzyciskWygenerujWzorcowa obslugaWygenerujWzorcowa;
     private PrzyciskZapiszWzorcowa obslugaZapiszWzorcowa;
+    private PrzyciskZakoncz oblugaZakoncz;
     private String kluczKryptoanaliza;
 
     /**
@@ -146,6 +147,7 @@ public class Kryptografia extends JFrame {
         okno.add(wczytajSzyfrPrzycisk);
 
         wczytajWzorcowaPrzycisk = new JButton("Wczytaj stat.wzorcową");
+        wczytajWzorcowaPrzycisk.setToolTipText("Wczytaj statystykę wzorcową");
         obslugaWczytajWzorcowa = new PrzyciskWczytajWzorcowa();
         wczytajWzorcowaPrzycisk.addActionListener(obslugaWczytajWzorcowa);
         wczytajWzorcowaPrzycisk.setLocation(325, 522);
@@ -153,13 +155,15 @@ public class Kryptografia extends JFrame {
         okno.add(wczytajWzorcowaPrzycisk);
 
         wygenerujWzorcowaPrzycisk = new JButton("Wygeneruj stat.wzorcową");
+        wygenerujWzorcowaPrzycisk.setToolTipText("Wygeneruj statystykę wzorcową");
         obslugaWygenerujWzorcowa = new PrzyciskWygenerujWzorcowa();
         wygenerujWzorcowaPrzycisk.addActionListener(obslugaWygenerujWzorcowa);
         wygenerujWzorcowaPrzycisk.setLocation(645, 522);
-        wygenerujWzorcowaPrzycisk.setSize(150, 20);
+        wygenerujWzorcowaPrzycisk.setSize(200, 20);
         okno.add(wygenerujWzorcowaPrzycisk);
 
         zapiszWzorcowaPrzycisk = new JButton("Zapisz stat.wzorcową");
+        zapiszWzorcowaPrzycisk.setToolTipText("Zapisz statystykę wzorcową");
         obslugaZapiszWzorcowa = new PrzyciskZapiszWzorcowa();
         zapiszWzorcowaPrzycisk.addActionListener(obslugaZapiszWzorcowa);
         zapiszWzorcowaPrzycisk.setLocation(485, 522);
@@ -183,9 +187,18 @@ public class Kryptografia extends JFrame {
         autorzyPrzycisk = new JButton("Autorzy");
         obslugaAutorzy = new PrzyciskAutorzy();
         autorzyPrzycisk.addActionListener(obslugaAutorzy);
-        autorzyPrzycisk.setLocation(885, 0);
+        autorzyPrzycisk.setLocation(880, 5);
         autorzyPrzycisk.setSize(80, 20);
         okno.add(autorzyPrzycisk);
+        
+        zakonczPrzycisk = new JButton("Zakończ");
+        zakonczPrzycisk.setToolTipText("Wyjdź z programu");
+        oblugaZakoncz = new PrzyciskZakoncz();
+        zakonczPrzycisk.addActionListener(oblugaZakoncz);
+        zakonczPrzycisk.setLocation(880, 500);
+        zakonczPrzycisk.setSize(80, 40);
+        zakonczPrzycisk.setForeground(Color.RED);
+        okno.add(zakonczPrzycisk);
 
         zamianaMiejscPrzycisk = new JButton();
         try {
@@ -389,6 +402,14 @@ public class Kryptografia extends JFrame {
                     + "\n- Goniprowski Mateusz"
                     + "\n- Niesłuchowski Kamil"
                     + "\n- Załuska Paweł");
+        }
+    }
+    
+    private class PrzyciskZakoncz implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
         }
     }
 
