@@ -1,6 +1,8 @@
 package kryptografia2;
 
+import AES.AES;
 import rc4.RC4;
+import DES.DES;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -13,6 +15,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.xml.bind.DatatypeConverter;
 
 public class Kryptografia2 extends JFrame {
 
@@ -31,6 +34,8 @@ public class Kryptografia2 extends JFrame {
     private PrzyciskZamianaMiejsc obslugaZamianaMiejsc;
     private JRadioButton radioRC4, radioAES, radioDES;
     String wyborRadio="RC4";
+    long start = 0;
+    long end = 0;
 
     /**
      * Konstruktor głównej klasy, inicjalizowanie wyglądu programu
@@ -201,12 +206,31 @@ public class Kryptografia2 extends JFrame {
         public void actionPerformed(ActionEvent e) {
             String klucz = kluczWejscie.getText();
             String tekst = textWejscie.getText();
-            
+
             if ("RC4".equals(wyborRadio)) {
+                start = System.nanoTime();
                 RC4 rc4 = new RC4(klucz);
                 char[] wynik = rc4.szyfrowanie(tekst.toCharArray());
                 textWyjscie.setText(new String(wynik));
+                end = System.nanoTime();
+            } else if ("AES".equals(wyborRadio)) {
+                start = System.nanoTime();
+                new AES();
+                byte[] enc = AES.szyfruj(tekst.getBytes(), klucz.getBytes());
+                String CMsg = new String(enc);
+                CMsg = toHexString(enc);
+                textWyjscie.append(CMsg);
+                end = System.nanoTime();
+            } else if ("DES".equals(wyborRadio)) {
+                start = System.nanoTime();
+                new DES();
+                byte[] enc = DES.encrypt(tekst.getBytes(), klucz.getBytes());
+                String CMsg = new String(enc);
+                CMsg = toHexString(enc);
+                textWyjscie.append(CMsg);
+                end = System.nanoTime();
             }
+            JOptionPane.showMessageDialog(null, "Czas wykonania szyfrowania w sekundach: " + (end - start) / 1000000000.0);
 
             if (!kluczWejscie.getText().isEmpty()) {
                 if (sprawdzCzyKluczSiePowtarza(kluczWejscie.getText()) == 1) {
@@ -225,12 +249,30 @@ public class Kryptografia2 extends JFrame {
         public void actionPerformed(ActionEvent e) {
             String klucz = kluczWejscie.getText();
             String tekst = textWejscie.getText();
-            
+
             if ("RC4".equals(wyborRadio)) {
+                start = System.nanoTime();
                 RC4 rc4 = new RC4(klucz);
                 char[] wynik = rc4.deszyfrowanie(tekst.toCharArray());
                 textWyjscie.setText(new String(wynik));
+                end = System.nanoTime();
+            } else if ("AES".equals(wyborRadio)) {
+                start = System.nanoTime();
+                new AES();
+                byte[] CMsg = toByteArray(tekst);
+                byte[] dec = AES.odszyfruj(CMsg, klucz.getBytes());
+                textWyjscie.append(new String(dec));
+                end = System.nanoTime();
+            } else if ("DES".equals(wyborRadio)) {
+                start = System.nanoTime();
+                new DES();
+                byte[] CMsg = toByteArray(tekst.replace("\r\n", ""));
+                byte[] dec = DES.decrypt(CMsg, klucz.replace("\r\n", "").getBytes());
+                textWyjscie.append(new String(dec));
+                end = System.nanoTime();
             }
+            
+            JOptionPane.showMessageDialog(null, "Czas wykonania deszyfrowania w sekundach: " + (end - start) / 1000000000.0);
         }
     }
     
@@ -314,6 +356,33 @@ public class Kryptografia2 extends JFrame {
         }
     };
 
+        public static String byteArrayToHex(byte[] a) {
+        StringBuilder sb = new StringBuilder(a.length * 2);
+        for (byte b : a) {
+            sb.append(String.format("%02x", b & 0xff));
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Konwersja tablicy bitowej do obiektu typu String
+     *
+     * @param array
+     * @return
+     */
+    public static String toHexString(byte[] array) {
+        return DatatypeConverter.printHexBinary(array);
+    }
+
+    /**
+     * Konwersja obiektu String do tablicy bitów
+     *
+     * @param s
+     * @return
+     */
+    public static byte[] toByteArray(String s) {
+        return DatatypeConverter.parseHexBinary(s);
+    }
     
     /**
      * Wczytuje z pliku
