@@ -267,6 +267,16 @@ public class Kryptografia2 extends JFrame {
         public void actionPerformed(ActionEvent e) {
             String klucz = kluczWejscie.getText();
             String tekst = textWejscie.getText();
+            
+            if(textWejscie.getText().length() == 0){
+                JOptionPane.showMessageDialog(null, "Brak wpisanego tekstu jawnego !!!", "Brak tekstu jawnego" , JOptionPane.ERROR_MESSAGE);
+                return ;
+            }
+            
+            if(kluczWejscie.getText().length() == 0){
+                JOptionPane.showMessageDialog(null, "Brak wpisanego klucza !!!", "Brak klucza" , JOptionPane.ERROR_MESSAGE);
+                return ;
+            }
 
             if ("RC4".equals(wyborRadio)) {
                 start = System.nanoTime();
