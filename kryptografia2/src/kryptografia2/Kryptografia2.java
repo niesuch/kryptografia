@@ -78,7 +78,6 @@ public class Kryptografia2 extends JFrame {
         kluczWejscie.setLocation(115, 243);
         kluczWejscie.setSize(270, 40);
         kluczWejscie.setFont(czcionkatext);
-        kluczWejscie.setText("01FE01FE01FE01FE");
         okno.add(kluczWejscie);
 
         szyfrujPrzycisk = new JButton("Szyfruj");
@@ -215,6 +214,16 @@ public class Kryptografia2 extends JFrame {
         public void actionPerformed(ActionEvent e) {
             String klucz = kluczWejscie.getText();
             String tekst = textWejscie.getText();
+            
+            if(textWejscie.getText().length() == 0){
+                JOptionPane.showMessageDialog(null, "Brak wpisanego tekstu jawnego !!!", "Brak tekstu jawnego" , JOptionPane.ERROR_MESSAGE);
+                return ;
+            }
+            
+            if(kluczWejscie.getText().length() == 0){
+                JOptionPane.showMessageDialog(null, "Brak wpisanego klucza !!!", "Brak klucza" , JOptionPane.ERROR_MESSAGE);
+                return ;
+            }
 
             if ("RC4".equals(wyborRadio)) {
                 start = System.nanoTime();
@@ -239,7 +248,7 @@ public class Kryptografia2 extends JFrame {
                 textWyjscie.append(CMsg);
                 end = System.nanoTime();
             }
-            JOptionPane.showMessageDialog(null, "Czas wykonania szyfrowania w sekundach: " + (end - start) / 1000000000.0);
+            JOptionPane.showMessageDialog(null, "Liczba znaków tekstu jawnego: " + textWejscie.getText().length() + "\nCzas wykonania szyfrowania w sekundach: " + (end - start) / 1000000000.0, "Informacje o szyfrowaniu" , JOptionPane.INFORMATION_MESSAGE);
 
             if (!kluczWejscie.getText().isEmpty()) {
                 if (sprawdzCzyKluczSiePowtarza(kluczWejscie.getText()) == 1) {
