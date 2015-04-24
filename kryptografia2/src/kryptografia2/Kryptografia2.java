@@ -23,7 +23,7 @@ public class Kryptografia2 extends JFrame {
     private static JTextArea textWyjscie, textWejscie;
     private JScrollPane scrollText, scrollText2;
     private JButton szyfrujPrzycisk, deszyfrujPrzycisk, archiwumKluczyPrzycisk,
-            wczytajPrzycisk, autorzyPrzycisk, zapiszSzyfrPrzycisk, wczytajSzyfrPrzycisk, zamianaMiejscPrzycisk;
+            wczytajPrzycisk, autorzyPrzycisk, zapiszSzyfrPrzycisk, wczytajSzyfrPrzycisk, zamianaMiejscPrzycisk, zakonczPrzycisk;
     private PrzyciskSzyfruj obslugaSzyfruj;
     private PrzyciskDeszyfruj obslugaDeszyfruj;
     private PrzyciskArchiwumKluczy obslugaArchiwumKluczy;
@@ -32,6 +32,7 @@ public class Kryptografia2 extends JFrame {
     private PrzyciskZapiszSzyfr obslugaZapiszSzyfr;
     private PrzyciskWczytajSzyfr obslugaWczytajSzyfr;
     private PrzyciskZamianaMiejsc obslugaZamianaMiejsc;
+    private PrzyciskZakoncz oblugaZakoncz;
     private JRadioButton radioRC4, radioAES, radioDES;
     String wyborRadio="RC4";
     long start = 0;
@@ -141,6 +142,15 @@ public class Kryptografia2 extends JFrame {
         zamianaMiejscPrzycisk.setLocation(10,250);
         zamianaMiejscPrzycisk.setSize(20, 27);
         okno.add(zamianaMiejscPrzycisk);
+        
+        zakonczPrzycisk = new JButton("Zakończ");
+        zakonczPrzycisk.setToolTipText("Wyjdź z programu");
+        oblugaZakoncz = new PrzyciskZakoncz();
+        zakonczPrzycisk.addActionListener(oblugaZakoncz);
+        zakonczPrzycisk.setLocation(325, 522);
+        zakonczPrzycisk.setSize(150,20);
+        zakonczPrzycisk.setForeground(Color.RED);
+        okno.add(zakonczPrzycisk);
 
         setTitle("Kryptografia");
         
@@ -371,6 +381,14 @@ public class Kryptografia2 extends JFrame {
 //            String pomoc = textWejscie.getText();
             textWejscie.setText(textWyjscie.getText());
             textWyjscie.setText("");
+        }
+    }
+    
+    private class PrzyciskZakoncz implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
         }
     }
     
