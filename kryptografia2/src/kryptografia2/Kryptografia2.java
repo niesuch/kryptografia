@@ -78,6 +78,7 @@ public class Kryptografia2 extends JFrame {
         kluczWejscie.setLocation(115, 243);
         kluczWejscie.setSize(270, 40);
         kluczWejscie.setFont(czcionkatext);
+        kluczWejscie.setText("01FE01FE01FE01FE");
         okno.add(kluczWejscie);
 
         szyfrujPrzycisk = new JButton("Szyfruj");
