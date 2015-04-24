@@ -319,10 +319,9 @@ public class Kryptografia2 extends JFrame {
      */
     private class PrzyciskAutorzy implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(null, "Autorzy:"
-                                              + "\n- Goniprowski Mateusz"
+            JOptionPane.showMessageDialog(null,"- Goniprowski Mateusz"
                                               + "\n- Niesłuchowski Kamil"
-                                              + "\n- Załuska Paweł");
+                                              + "\n- Załuska Paweł", "Autorzy",JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
