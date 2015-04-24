@@ -300,7 +300,7 @@ public class Kryptografia2 extends JFrame {
                 end = System.nanoTime();
             }
             
-            JOptionPane.showMessageDialog(null, "Czas wykonania deszyfrowania w sekundach: " + (end - start) / 1000000000.0);
+            JOptionPane.showMessageDialog(null, "Liczba znaków tekstu jawnego : " + textWejscie.getText().length() + "\nCzas wykonania deszyfrowania w sekundach: " + (end - start) / 1000000000.0, "Informacje o deszyfracji", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
