@@ -50,6 +50,8 @@ public class Kryptografia2 extends JFrame {
             System.err.println("Bład podczas ładowania wyglądu okna.");
         }
         
+        this.setResizable(false);
+        
         Font czcionkatext = new Font("Courier New", Font.BOLD, 12);
         textWejscie = new JTextArea("", 50, 895);
         scrollText2 = new JScrollPane(textWejscie);
@@ -155,17 +157,17 @@ public class Kryptografia2 extends JFrame {
         radioRC4.addActionListener(obslugaRadio);
         radioAES.addActionListener(obslugaRadio);
         radioDES.addActionListener(obslugaRadio);
-        radioRC4.setLocation(5,5);
-        radioAES.setLocation(55,5);
-        radioDES.setLocation(110,5);
-        radioRC4.setSize(50,20);        
-        radioAES.setSize(50,20);
-        radioDES.setSize(50,20);
+        radioRC4.setLocation(105,5);
+        radioAES.setLocation(205,5);
+        radioDES.setLocation(305,5);
+        radioRC4.setSize(75,25);        
+        radioAES.setSize(75,25);
+        radioDES.setSize(75,25);
         radioRC4.setSelected(true);
         
                 
         radioAES.addActionListener(obslugaRadio);
-        
+              
         Font czcionka = new Font("Courier New", Font.BOLD, 17);
         JLabel tekst1 = new JLabel("Tekst jawny:", SwingConstants.LEFT);
         tekst1.setSize(300, 20);
@@ -185,7 +187,13 @@ public class Kryptografia2 extends JFrame {
         tekst5.setFont(czcionka);
         okno.add(tekst5);
         
-        setSize(495, 585);
+        JLabel tekst6 = new JLabel("Algorytm:", SwingConstants.LEFT);
+        tekst6.setSize(300,20);
+        tekst6.setLocation(5,7);
+        tekst6.setFont(czcionka);
+        okno.add(tekst6);
+        
+        setSize(490, 585);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
@@ -341,9 +349,9 @@ public class Kryptografia2 extends JFrame {
      */
     private class PrzyciskZamianaMiejsc implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            String pomoc = textWejscie.getText();
+//            String pomoc = textWejscie.getText();
             textWejscie.setText(textWyjscie.getText());
-            textWyjscie.setText(pomoc);
+            textWyjscie.setText("");
         }
     }
     
