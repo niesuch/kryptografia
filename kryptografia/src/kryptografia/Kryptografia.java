@@ -276,6 +276,17 @@ public class Kryptografia extends JFrame {
         public void actionPerformed(ActionEvent e) {
             String tresc = textWejscie.getText();
             String klucz = kluczWejscie.getText();
+            
+            if(textWejscie.getText().length() == 0){
+                JOptionPane.showMessageDialog(null, "Brak wpisanego tekstu jawnego !!!", "Brak tekstu jawnego" , JOptionPane.ERROR_MESSAGE);
+                return ;
+            }
+            
+            if(kluczWejscie.getText().length() == 0){
+                JOptionPane.showMessageDialog(null, "Brak wpisanego klucza !!!", "Brak klucza" , JOptionPane.ERROR_MESSAGE);
+                return ;
+            }
+            
             klucz = dodajAlfabet(klucz.toUpperCase());
             textWyjscie.setText("");
             kluczWejscie.setText(klucz);
@@ -319,7 +330,7 @@ public class Kryptografia extends JFrame {
 
             if (klucz.length() != 26) {
                 JOptionPane.showMessageDialog(null, "Podany klucz nie ma 26 znaków!\n"
-                        + "Wczytaj klucz z archiwum bądź popraw już wpisany.");
+                        + "Wczytaj klucz z archiwum bądź popraw już wpisany.", "Błąd klucza", JOptionPane.ERROR_MESSAGE);
             } else {
                 String alfabet = pobierzAlfabet();
                 char[] tab_alfabet = alfabet.toCharArray();
@@ -395,13 +406,11 @@ public class Kryptografia extends JFrame {
      * Obsługa przycisku "Autorzy"
      */
     private class PrzyciskAutorzy implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(null, "Autorzy:"
-                    + "\n- Goniprowski Mateusz"
-                    + "\n- Niesłuchowski Kamil"
-                    + "\n- Załuska Paweł");
+            JOptionPane.showMessageDialog(null,"- Goniprowski Mateusz"
+                                              + "\n- Niesłuchowski Kamil"
+                                              + "\n- Załuska Paweł", "Autorzy",JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
