@@ -11,11 +11,16 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
 
 public class Kryptografia extends JFrame {
 
     private static JTextField kluczWejscie;
-    private static JTextArea textWyjscie, textWejscie, textStat, textKrypto, textWzorcowa;
+    private static JTextArea textWejscie, textStat, textKrypto, textWzorcowa;
+    private static JTextPane textWyjscie;
     private JScrollPane scrollText, scrollText2, scrollTextStat, scrollTextKrypto, scrollTextWzorcowa;
     private JButton szyfrujPrzycisk, deszyfrujPrzycisk, kryptoanalizaPrzycisk, archiwumKluczyPrzycisk,
             wczytajPrzycisk, autorzyPrzycisk, zapiszSzyfrPrzycisk, wczytajSzyfrPrzycisk, zamianaMiejscPrzycisk,
@@ -42,7 +47,7 @@ public class Kryptografia extends JFrame {
     public Kryptografia() {
         Container okno = getContentPane();
         okno.setLayout(null);
-
+        
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -89,11 +94,13 @@ public class Kryptografia extends JFrame {
         scrollTextWzorcowa.setSize(180, 447);
         okno.add(scrollTextWzorcowa);
 
-        textWyjscie = new JTextArea("", 50, 895);
+        //textWyjscie = new JTextPane(50, 895);
+        textWyjscie = new JTextPane();
+        textWyjscie.setLocation(50, 895);
         scrollText = new JScrollPane(textWyjscie);
         scrollText.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        textWyjscie.setLineWrap(true);
-        textWyjscie.setWrapStyleWord(false);
+//        textWyjscie.setLineWrap(true);
+//        textWyjscie.setWrapStyleWord(false);
         //textWyjscie.setEditable(false);
         scrollText.setLocation(5, 320);
         scrollText.setSize(400, 180);
@@ -266,6 +273,20 @@ public class Kryptografia extends JFrame {
     public Kryptografia(String wybor) {
         kluczWejscie.setText(wybor);
     }
+    
+    private void appendToPane(JTextPane tp, String msg, Color c)
+    {
+        StyleContext sc = StyleContext.getDefaultStyleContext();
+        AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, c);
+
+        aset = sc.addAttribute(aset, StyleConstants.FontFamily, "Lucida Console");
+        aset = sc.addAttribute(aset, StyleConstants.Alignment, StyleConstants.ALIGN_JUSTIFIED);
+
+        int len = tp.getDocument().getLength();
+        tp.setCaretPosition(len);
+        tp.setCharacterAttributes(aset, false);
+        tp.replaceSelection(msg);
+    }
 
     /**
      * Obsługa przycisku "Szyfruj"
@@ -303,8 +324,9 @@ public class Kryptografia extends JFrame {
                 } else {
                     szyfruj = tab_klucz[pozycja];
                 }
-
-                textWyjscie.append(Character.toString(szyfruj));
+                
+//                textWyjscie.append(Character.toString(szyfruj));
+                appendToPane(textWyjscie, (Character.toString(szyfruj)), Color.black);
             }
 
             String charakterystyka = wyznaczCharakterystyke(textWyjscie.getText());
@@ -346,7 +368,8 @@ public class Kryptografia extends JFrame {
                         deszyfruj = tab_alfabet[pozycja];
                     }
 
-                    textWyjscie.append(Character.toString(deszyfruj));
+//                    textWyjscie.append(Character.toString(deszyfruj));
+                    appendToPane(textWyjscie, (Character.toString(deszyfruj)), Color.red);
                 }
 
                 String charakterystyka = wyznaczCharakterystyke(textWyjscie.getText());
