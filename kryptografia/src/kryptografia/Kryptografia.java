@@ -312,7 +312,7 @@ public class Kryptografia extends JFrame {
             textWyjscie.setText("");
             kluczWejscie.setText(klucz);
 
-            char[] tab_tresc = tresc.toUpperCase().toCharArray();
+            char[] tab_tresc = tresc.toCharArray();
             char[] tab_klucz = klucz.toCharArray();
 
             for (int i = 0; i < tresc.length(); i++) {
