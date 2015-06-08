@@ -5,7 +5,7 @@
 
 Branch <b>master:</b><br/>
 <b>Opis:</b>
-<p align="justify">Realizacja szyfru podstawieniowego przy pseudolosowo generowanym kluczu. Aplikacja szyfruje i deszyfruje wybrany przez użytkownika tekst. Na podstawie szyfrogramów program tworzy jego charakterystyke, a dodatkowo przy wczytaniu odpowiednio dlugiego tekstu jest w stanie wygenerować statystyke wzorcowa w celu wykonania kryptoanalizy. Aplikacja przechowuje wszystkie (bez powtórzeń) użyte klucze w pliku.</p>
+<p align="justify">Realizacja szyfru podstawieniowego przy pseudolosowo generowanym kluczu. Aplikacja szyfruje i deszyfruje wybrany przez użytkownika tekst. Na podstawie szyfrogramów program tworzy jego charakterystykę, a dodatkowo przy wczytaniu odpowiednio długiego tekstu jest w stanie wygenerować statystykę wzorcową w celu wykonania kryptoanalizy. Aplikacja przechowuje wszystkie (bez powtórzeń) użyte klucze w archiwum kluczy.</p>
 
 Branch <b>projekt2:</b><br/>
 <b>Opis:</b>
