@@ -10,8 +10,10 @@
 2. [Branch projekt2](https://github.com/niesuch/kryptografia/blob/master/README.md#branch-projekt2)
   1. [Opis](https://github.com/niesuch/kryptografia/blob/master/README.md#opis-1)
   2. [Linki](https://github.com/niesuch/kryptografia/blob/master/README.md#linki-1)
-3. [Logi zmian](https://github.com/niesuch/kryptografia/blob/master/README.md#linki)
-4. [Prawa autorskie i licencja](https://github.com/niesuch/kryptografia/blob/master/README.md#prawa-autorskie-i-licencja)
+3. [Wymagane oprogramowanie](https://github.com/niesuch/kryptografia/blob/master/README.md#wymagane-oprogramowanie)
+4. [Instalacja programu](https://github.com/niesuch/kryptografia/blob/master/README.md#instalacja-programu)
+5. [Logi zmian](https://github.com/niesuch/kryptografia/blob/master/README.md#linki)
+6. [Prawa autorskie i licencja](https://github.com/niesuch/kryptografia/blob/master/README.md#prawa-autorskie-i-licencja)
 
 ## Branch master:
 ### Opis:
@@ -27,6 +29,16 @@
 
 ### Linki:
 * [Aplikacja](https://www.dropbox.com/sh/p9we41vnenalsfn/AAAorhJuTWRkrJN28Jnwzkama?dl=0)
+
+## Wymagane oprogramowanie:
+<p align="justify">Poza małymi wymaganiami sprzętowymi, niezbędne do działania programu jest oprogramowanie wymienione poniżej: </p>
+* Dowolny system operacyjny 
+* Zainstalowana maszyna wirtualną Javy w wersji JRE 7+
+
+## Instalacja programu:
+<p align="justify">Aby zacząć używać programu wystarczy uruchomić plik o nazwie "kryptografia.jar" / "kryptografia2.jar", 
+które dostępne są w sekcji Linki. W celu korzystania z archiwum kluczy należy dodatkowo stworzyć plik tekstowy (jeżeli nie 
+istnieje w folderze programu) o nazwie „klucze” z rozszerzeniem *.txt. </p>
 
 ## Logi zmian:
 Logi zmian dostępne są pod tym adresem: [CHANGELOG](https://github.com/niesuch/kryptografia/releases)
