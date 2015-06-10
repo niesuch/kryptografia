@@ -13,7 +13,7 @@
 
 ##Branch projekt2:
 <b>Opis:</b>
-<p align="justify">Realizacja szyfrów DES, AES i RC4. Aplikacja szyfruje i deszyfruje wybrany przez użytkownika tekst.</p>
+<p align="justify">Realizacja szyfrów DES, AES i RC4. Aplikacja szyfruje i deszyfruje teskt użytkownika wybranym przez niego algorytmem.</p>
 
 ##Linki:
 * [Aplikacja](https://www.dropbox.com/sh/p9we41vnenalsfn/AAAorhJuTWRkrJN28Jnwzkama?dl=0)
