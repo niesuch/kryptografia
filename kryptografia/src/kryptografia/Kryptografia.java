@@ -369,7 +369,7 @@ public class Kryptografia extends JFrame {
                     }
 
 //                    textWyjscie.append(Character.toString(deszyfruj));
-                    appendToPane(textWyjscie, (Character.toString(deszyfruj)), Color.red);
+                    appendToPane(textWyjscie, (Character.toString(deszyfruj)), Color.black);
                 }
 
                 String charakterystyka = wyznaczCharakterystyke(textWyjscie.getText());
@@ -385,6 +385,7 @@ public class Kryptografia extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            textWyjscie.setText("");
             String text = textKrypto.getText();
             if (text.isEmpty()) {
                 String szablon = wygenerujSzablonKryptoanalizy();
@@ -400,14 +401,12 @@ public class Kryptografia extends JFrame {
                     kryptoanaliza = "";
                     for (int i = 0; i < tab_kryptoanaliza.length; i++) {
                         if (tab_wejscie[i] != tab_kryptoanaliza[i]) {
-                            String pomoc = "";
-                            pomoc += tab_kryptoanaliza[i];
-                            kryptoanaliza += pomoc.toLowerCase();
+                            appendToPane(textWyjscie, "" + tab_kryptoanaliza[i], Color.red);
                         } else {
-                            kryptoanaliza += tab_kryptoanaliza[i];
+                            appendToPane(textWyjscie, "" + tab_kryptoanaliza[i], Color.black);
                         }
                     }
-                    textWyjscie.setText(kryptoanaliza);
+//                    textWyjscie.setText(kryptoanaliza);
                 }
             }
         }
