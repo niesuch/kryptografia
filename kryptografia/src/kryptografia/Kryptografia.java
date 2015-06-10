@@ -906,16 +906,16 @@ public class Kryptografia extends JFrame {
      */
     private int[] sortujCharakterystyke(String charakterystyka) {
         String[] tab = charakterystyka.split(" = ");
-        String[] inty = new String[26];
-        int[] tab_inty = new int[26];
-        int[] tab_inty2 = new int[26];
-        int[] tab_pozycje = new int[26];
+        String[] inty = new String[27];
+        int[] tab_inty = new int[27];
+        int[] tab_inty2 = new int[27];
+        int[] tab_pozycje = new int[27];
 
         // sprawdzanie ile znaków ma liczba
         for (int i = 1; i < tab.length; i++) {
             for (int j = 1; true; j++) {
-                if (tab[i].toString().substring(j, j + 1).indexOf(" ") == 0) {
-                    inty[i - 1] = tab[i].toString().substring(0, j);
+                if (tab[i].substring(j, j + 1).indexOf(" ") == 0) {
+                    inty[i - 1] = tab[i].substring(0, j);
                     break;
                 }
             }
