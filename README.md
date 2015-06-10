@@ -5,11 +5,11 @@
 
 ## Spis treści:
 1. [Branch master](https://github.com/niesuch/kryptografia/blob/master/README.md#branch-master)
-..1. [Opis]
-..2. [Linki]
+  1. [Opis](https://github.com/niesuch/kryptografia/blob/master/README.md#opis)
+  2. [Linki](https://github.com/niesuch/kryptografia/blob/master/README.md#linki)
 2. [Branch projekt2](https://github.com/niesuch/kryptografia/blob/master/README.md#branch-projekt2)
-..1. [Opis]
-..2. [Linki]
+  1. [Opis](https://github.com/niesuch/kryptografia/blob/master/README.md#opis-1)
+  2. [Linki](https://github.com/niesuch/kryptografia/blob/master/README.md#linki-1)
 3. [Logi zmian](https://github.com/niesuch/kryptografia/blob/master/README.md#linki)
 4. [Prawa autorskie i licencja](https://github.com/niesuch/kryptografia/blob/master/README.md#prawa-autorskie-i-licencja)
 
@@ -29,9 +29,9 @@
 * [Aplikacja](https://www.dropbox.com/sh/p9we41vnenalsfn/AAAorhJuTWRkrJN28Jnwzkama?dl=0)
 
 ## Logi zmian:
-Logi zmian dostępne są pod tym adresem -> [CHANGELOG](https://github.com/niesuch/kryptografia/releases)
+Logi zmian dostępne są pod tym adresem: [CHANGELOG](https://github.com/niesuch/kryptografia/releases)
 
 ## Prawa autorskie i licencja:
-Copyright 2015 Niesuch, Zecior, Babelinio, Inc. Kod wydany na licencji [MIT](https://github.com/niesuch/kryptografia/blob/master/LICENCE.md)
+Copyright 2015 Niesuch, Zecior, Babelinio, Inc. Kod wydany na licencji [MIT](https://github.com/niesuch/kryptografia/blob/master/LICENCE.md).
 
 [Powrót do początku](https://github.com/niesuch/kryptografia/blob/master/README.md#kryptografia)
