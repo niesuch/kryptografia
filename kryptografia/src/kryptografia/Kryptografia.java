@@ -307,6 +307,8 @@ public class Kryptografia extends JFrame {
                 JOptionPane.showMessageDialog(null, "Brak wpisanego klucza !!!", "Brak klucza" , JOptionPane.ERROR_MESSAGE);
                 return ;
             }
+            tresc = tresc.toUpperCase();
+            textWejscie.setText(tresc);
             
             klucz = dodajAlfabet(klucz.toUpperCase());
             textWyjscie.setText("");
