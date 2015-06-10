@@ -32,6 +32,6 @@
 Logi zmian dostępne są pod tym adresem: [CHANGELOG](https://github.com/niesuch/kryptografia/releases)
 
 ## Prawa autorskie i licencja:
-Copyright 2015 Niesuch, Zecior, Babelinio, Inc. Kod wydany na licencji [MIT](https://github.com/niesuch/kryptografia/blob/master/LICENCE.md).
+Copyright 2015 Niesuch, Zecior, Babelinio, Inc. Kod wydany na licencji [MIT](https://github.com/niesuch/kryptografia/blob/master/LICENSE.md).
 
 [Powrót do początku](https://github.com/niesuch/kryptografia/blob/master/README.md#kryptografia)
