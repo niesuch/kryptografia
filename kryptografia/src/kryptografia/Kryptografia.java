@@ -697,6 +697,18 @@ public class Kryptografia extends JFrame {
             charakterystyka += ")";
             charakterystyka += '\n';
         }
+        
+        charakterystyka += "_";
+            charakterystyka += " = ";
+
+            int ilosc = policzWystapienia(text, ' ');
+            float srednia = (float) ilosc / (float) text.length();
+
+            charakterystyka += Integer.toString(ilosc);
+            charakterystyka += " (";
+            charakterystyka += Float.toString(srednia);
+            charakterystyka += ")";
+            charakterystyka += '\n';
 
         int[] tab_pozycji = sortujCharakterystyke(charakterystyka);
         String[] tab_charakterystyka = charakterystyka.split("\n");
