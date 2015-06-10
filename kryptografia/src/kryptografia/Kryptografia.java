@@ -55,12 +55,16 @@ public class Kryptografia extends JFrame {
         }
 
         this.setResizable(false);
+        
+        Font czcionka_textarea = new Font("Courier New", Font.BOLD, 13);
+        Font czcionka_textarea2 = new Font("Courier New", Font.BOLD, 11);
 
         textWejscie = new JTextArea("", 50, 895);
         scrollText2 = new JScrollPane(textWejscie);
         scrollText2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         textWejscie.setLineWrap(true);
         textWejscie.setWrapStyleWord(true);
+        textWejscie.setFont(czcionka_textarea);
         scrollText2.setLocation(5, 52);
         scrollText2.setSize(400, 180);
         okno.add(scrollText2);
@@ -71,6 +75,7 @@ public class Kryptografia extends JFrame {
         textStat.setLineWrap(true);
         textStat.setWrapStyleWord(true);
         textStat.setEditable(false);
+        textStat.setFont(czcionka_textarea2);
         scrollTextStat.setLocation(410, 52);
         scrollTextStat.setSize(180, 447);
         okno.add(scrollTextStat);
@@ -80,6 +85,7 @@ public class Kryptografia extends JFrame {
         scrollTextKrypto.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         textKrypto.setLineWrap(true);
         textKrypto.setWrapStyleWord(true);
+        textKrypto.setFont(czcionka_textarea);
         scrollTextKrypto.setLocation(780, 52);
         scrollTextKrypto.setSize(180, 447);
         okno.add(scrollTextKrypto);
@@ -90,6 +96,7 @@ public class Kryptografia extends JFrame {
         textWzorcowa.setLineWrap(true);
         textWzorcowa.setWrapStyleWord(true);
         textWzorcowa.setEditable(false);
+        textWzorcowa.setFont(czcionka_textarea2);
         scrollTextWzorcowa.setLocation(595, 52);
         scrollTextWzorcowa.setSize(180, 447);
         okno.add(scrollTextWzorcowa);
@@ -97,10 +104,11 @@ public class Kryptografia extends JFrame {
         //textWyjscie = new JTextPane(50, 895);
         textWyjscie = new JTextPane();
         textWyjscie.setLocation(50, 895);
+        textWyjscie.setFont(czcionka_textarea);
         scrollText = new JScrollPane(textWyjscie);
         scrollText.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//        textWyjscie.setLineWrap(true);
-//        textWyjscie.setWrapStyleWord(false);
+        //textWyjscie.setLineWrap(true);
+        //textWyjscie.setWrapStyleWord(false);
         //textWyjscie.setEditable(false);
         scrollText.setLocation(5, 320);
         scrollText.setSize(400, 180);
@@ -109,6 +117,7 @@ public class Kryptografia extends JFrame {
         kluczWejscie = new JTextField(3);
         kluczWejscie.setLocation(115, 243);
         kluczWejscie.setSize(200, 40);
+        kluczWejscie.setFont(czcionka_textarea);
         okno.add(kluczWejscie);
 
         szyfrujPrzycisk = new JButton("Szyfruj");
