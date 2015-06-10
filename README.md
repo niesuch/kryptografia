@@ -23,7 +23,7 @@
 
 ## Branch projekt2:
 ###Opis:
-<p align="justify">Realizacja szyfrów DES, AES i RC4. Aplikacja szyfruje i deszyfruje tekst użytkownika wybranym przez niego algorytmem.</p>
+<p align="justify">Realizacja szyfrów DES, AES i RC4. Aplikacja szyfruje i deszyfruje tekst użytkownika wybranym przez niego algorytmem. Wersja pozbawiona funkcji generowania statystyki wzorcowej, tworzenia charakterystyki szyfrogramu oraz kryptoanalizy.</p>
 
 ### Linki:
 * [Aplikacja](https://www.dropbox.com/sh/p9we41vnenalsfn/AAAorhJuTWRkrJN28Jnwzkama?dl=0)
