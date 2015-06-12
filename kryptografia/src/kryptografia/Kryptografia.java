@@ -443,7 +443,9 @@ public class Kryptografia extends JFrame {
         public void actionPerformed(ActionEvent e) {
             JOptionPane.showMessageDialog(null,"- Goniprowski Mateusz"
                                               + "\n- Niesłuchowski Kamil"
-                                              + "\n- Załuska Paweł", "Autorzy",JOptionPane.INFORMATION_MESSAGE);
+                                              + "\n- Załuska Paweł"
+                                              + "\n Wyrażamy zgodę na wykorzystywanie programu w celach dydaktycznych.", 
+                                                "Autorzy",JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
