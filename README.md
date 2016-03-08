@@ -21,7 +21,7 @@
 
 ### Linki:
 * [Dokumentacja](https://www.dropbox.com/sh/u4dsmm8didnqduu/AACXtGg397PkDSuZ4FtrM6Xsa?dl=0)
-* [Aplikacja](https://www.dropbox.com/sh/33coly05comzozm/AADOMTpTiadPGpArBseNmlToa?dl=0)
+* [Aplikacja](https://www.dropbox.com/sh/nozuo2az85s0hg4/AADE8NYYz_CeSD5ftyzwfJE9a?dl=0)
 
 ## Branch projekt2:
 ###Opis:
