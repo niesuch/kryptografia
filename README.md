@@ -20,15 +20,15 @@
 <p align="justify">Realizacja szyfru podstawieniowego przy pseudolosowo generowanym kluczu. Aplikacja szyfruje i deszyfruje wybrany przez użytkownika tekst. Na podstawie szyfrogramów program tworzy jego charakterystykę, a dodatkowo przy wczytaniu odpowiednio długiego tekstu jest w stanie wygenerować statystykę wzorcową w celu wykonania kryptoanalizy. Aplikacja przechowuje wszystkie (bez powtórzeń) użyte klucze w archiwum kluczy.</p>
 
 ### Linki:
-* [Dokumentacja](https://www.dropbox.com/sh/u4dsmm8didnqduu/AACXtGg397PkDSuZ4FtrM6Xsa?dl=0)
-* [Aplikacja](https://www.dropbox.com/sh/nozuo2az85s0hg4/AADE8NYYz_CeSD5ftyzwfJE9a?dl=0)
+* [Dokumentacja](https://github.com/niesuch/kryptografia/tree/master/docs/Dokumentacje)
+* [Aplikacja](https://github.com/niesuch/kryptografia/tree/master/docs/Aplikacja)
 
 ## Branch projekt2:
 ###Opis:
 <p align="justify">Realizacja szyfrów DES, AES i RC4. Aplikacja szyfruje i deszyfruje tekst użytkownika wybranym przez niego algorytmem. Wersja pozbawiona funkcji generowania statystyki wzorcowej, tworzenia charakterystyki szyfrogramu oraz kryptoanalizy.</p>
 
 ### Linki:
-* [Aplikacja](https://www.dropbox.com/sh/p9we41vnenalsfn/AAAorhJuTWRkrJN28Jnwzkama?dl=0)
+* [Aplikacja](https://github.com/niesuch/kryptografia/tree/master/docs/Projekt2/Aplikacja)
 
 ## Wymagane oprogramowanie:
 <p align="justify">Poza małymi wymaganiami sprzętowymi, niezbędne do działania programu jest oprogramowanie wymienione poniżej: </p>
