@@ -24,7 +24,7 @@
 * [Aplikacja](https://github.com/niesuch/kryptografia/tree/master/docs/Aplikacja)
 
 ## Branch projekt2:
-###Opis:
+### Opis:
 <p align="justify">Realizacja szyfrów DES, AES i RC4. Aplikacja szyfruje i deszyfruje tekst użytkownika wybranym przez niego algorytmem. Wersja pozbawiona funkcji generowania statystyki wzorcowej, tworzenia charakterystyki szyfrogramu oraz kryptoanalizy.</p>
 
 ### Linki:
